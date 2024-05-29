@@ -134,7 +134,7 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'carta/static')
 ]
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')  # Para producción
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')  # Para producción
 
 MEDIA_URL = '/imagenes/'
 MEDIA_ROOT = BASE_DIR / 'carta/static/imagenes'
