@@ -31,12 +31,14 @@ class Pedido(models.Model):
     def calcular_monto(self):
         monto_total = 0
         for item in self.pedidoitem_set.all():
-            monto_total += item.precio * item.cantidad_seleccionada
+            monto_total += item.item.precio * item.cantidad_seleccionada
         self.monto_total = monto_total
+        self.save(update_fields=['monto_total'])
+        return monto_total
 
-    def save(self):
-        self.calcular_monto()
-        super.save()
+    # def save(self):
+    #     self.calcular_monto()
+    #     super.save()
     
     def __str__(self):
         return f"Pedido {self.id}"
@@ -45,6 +47,15 @@ class PedidoItem(models.Model):
     pedido = models.ForeignKey(Pedido, on_delete=models.CASCADE)
     item = models.ForeignKey(Item, on_delete=models.CASCADE)
     cantidad_seleccionada = models.IntegerField(null=False, default=1)
+
+    def save(self, *args, **kwargs):
+        super().save()
+        self.pedido.calcular_monto()
+
+    def delete(self, *args, **kwargs):
+        pedido = self.pedido
+        super().delete(*args, **kwargs)
+        pedido.calcular_monto()
 
     def __str__(self):
         return f"{self.cantidad_seleccionada} cantidad seleccionada de {self.item.nombre} en Pedido {self.pedido.id}"
