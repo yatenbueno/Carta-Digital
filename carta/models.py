@@ -33,7 +33,10 @@ class Pedido(models.Model):
         for item in self.pedidoitem_set.all():
             monto_total += item.precio * item.cantidad_seleccionada
         self.monto_total = monto_total
-        self.save()
+
+    def save(self):
+        self.calcular_monto()
+        super.save()
     
     def __str__(self):
         return f"Pedido {self.id}"
