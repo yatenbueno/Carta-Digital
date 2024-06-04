@@ -18,8 +18,8 @@ class ItemAdmin(admin.ModelAdmin):
 
    ordering = ('nombre',)
 
-   search_fields = ('nombre',
-                    'categoria')
+   search_fields = ['nombre',
+                    'categoria__nombre']
 
    # list_filter = ('anio_nacimiento',
    #                'nacionalidad',)
