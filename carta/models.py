@@ -11,7 +11,7 @@ class Item(models.Model):
     precio = models.FloatField(null=False)
     cantidad_stock = models.IntegerField(null=False, verbose_name="Cantidad en stock")
     categoria = models.ForeignKey(Categoria, on_delete= models.CASCADE, null=True)
-    foto = models.ImageField(blank=True, upload_to='items/',verbose_name="foto")
+    foto = models.ImageField(blank=True, default="/static/imagenes/empty.jpg", upload_to='items/',verbose_name="foto")
 
     @property
     def get_foto_url(self):
