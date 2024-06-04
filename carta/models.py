@@ -9,7 +9,7 @@ class Categoria(models.Model):
 class Item(models.Model):
     nombre = models.CharField(max_length=50, null=False)
     precio = models.FloatField(null=False)
-    cantidad_stock = models.IntegerField(null=False)
+    cantidad_stock = models.IntegerField(null=False, verbose_name="Cantidad en stock")
     categoria = models.ForeignKey(Categoria, on_delete= models.CASCADE, null=True)
     foto = models.ImageField(blank=True, upload_to='items/',verbose_name="foto")
 
@@ -25,12 +25,12 @@ class Item(models.Model):
 
 class Pedido(models.Model):
     items = models.ManyToManyField(Item, blank=True, related_name="items", through='PedidoItem')
-    monto_total = models.FloatField(null=False, default=0)
+    monto_total = models.FloatField(null=False, default=0, verbose_name="Monto total")
     fecha = models.DateTimeField
     
     def calcular_monto(self):
         monto_total = 0
-        for item in self.pedidoitem_set.all():
+        for item in self.pedido_item.all():
             monto_total += item.item.precio * item.cantidad_seleccionada
         self.monto_total = monto_total
         self.save(update_fields=['monto_total'])
@@ -44,9 +44,9 @@ class Pedido(models.Model):
         return f"Pedido {self.id}"
 
 class PedidoItem(models.Model):
-    pedido = models.ForeignKey(Pedido, on_delete=models.CASCADE)
+    pedido = models.ForeignKey(Pedido, on_delete=models.CASCADE, related_name="pedido_item")
     item = models.ForeignKey(Item, on_delete=models.CASCADE)
-    cantidad_seleccionada = models.IntegerField(null=False, default=1)
+    cantidad_seleccionada = models.IntegerField(null=False, default=1, verbose_name="Cantidad seleccionada")
 
     def save(self, *args, **kwargs):
         super().save()
@@ -64,7 +64,7 @@ class Cliente(models.Model):
     nombre = models.CharField(max_length=50, null=False)
     apellido = models.CharField(max_length=50, null=False)
     dni = models.IntegerField(max_length=8, unique=True, null=False)
-    fecha_nacimiento = models.DateField(verbose_name="fecha nacimiento")
+    fecha_nacimiento = models.DateField(verbose_name="Fecha de nacimiento")
     pedido = models.ForeignKey(Pedido, on_delete=models.CASCADE)
 
     def __str__(self):
@@ -72,8 +72,8 @@ class Cliente(models.Model):
 
 class Reserva(models.Model):
     cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE)
-    cantidad_personas = models.IntegerField(null=False)
-    fecha_hora = models.DateTimeField(null=False)
+    cantidad_personas = models.IntegerField(null=False, verbose_name="Cantidad de personas")
+    fecha_hora = models.DateTimeField(null=False, verbose_name="Fecha y hora")
 
 class Descuento(models.Model):
     cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE)
