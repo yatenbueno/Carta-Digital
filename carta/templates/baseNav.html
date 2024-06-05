@@ -1,29 +1,31 @@
-{% load i18n %}
-
-<ul>
-    <li><a href="/">{% trans 'inicio' %}</a></li>
-    <li><a href="/bodega">{% trans 'Bodega' %}</a></li>
-    <li><a href="/bebidas">{% trans 'Bebidas' %}</a></li>
-    <li><a href="/menues">{% trans 'Menúes' %}</a></li>
-    <li><a href="/cafeteria">{% trans 'Cafetería' %}</a></li>
-</ul>
-
-<form class="buscador" action="/buscar/" method="GET">
-    <input type="text" name="Prod"> 
-    <input type="submit" value="buscar">  
-</form>
-
-<form action="{% url 'set_language' %}" method="post" class="language-form">
-    {% csrf_token %}
-    <input name="next" type="hidden" value="{{ request.get_full_path }}">
-    <select name="language" id="language">
-        {% get_current_language as LANGUAGE_CODE %}
-        {% get_available_languages as LANGUAGES %}
-        {% for lang_code, lang_name in LANGUAGES %}
-            <option value="{{ lang_code }}" {% if lang_code == LANGUAGE_CODE %}selected{% endif %}>
-                {{ lang_name }}
-            </option>
-        {% endfor %}
-    </select>
-    <button type="submit">Aceptar</button>
-</form>
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="/">Carta-Digital</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="/">inicio</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link active" href="/bebidas">Bebidas</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link active" href="/bodega">Bodega</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link active" href="/cafeteria">Cafetería</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link active" href="/menus">Menús</a>
+            </li>
+            </ul>
+            <form class="d-flex" role="search">
+            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success" type="submit">Search</button>
+            </form>
+        </div>
+    </div>
+</nav>

@@ -12,7 +12,7 @@ admin.site.register(Descuento)
 admin.site.register(PedidoItem)
 # Register your models here.
 
-class ItemAdmin(admin.ModelAdmin): 
+class ItemAdmin(admin.ModelAdmin):
 
    readonly_fields = ['imagen',]
 

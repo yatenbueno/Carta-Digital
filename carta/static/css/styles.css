@@ -31,8 +31,11 @@ html, body {
 .buscador input[type="submit"]:hover {
     background-color: #0056b3;
 }
-
+img.w-100{
+    width: 100px;
+}
 img {
+    width: auto;
     display: block;
     margin: auto; /* Centra la imagen horizontalmente */
 }
@@ -89,6 +92,3 @@ li a:hover {
 .language-form button:hover {
     background-color: #0056b3;
 }
-
-
-
