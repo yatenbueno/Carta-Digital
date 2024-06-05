@@ -11,14 +11,14 @@ class Item(models.Model):
     precio = models.FloatField(null=False)
     cantidad_stock = models.IntegerField(null=False, verbose_name="Cantidad en stock")
     categoria = models.ForeignKey(Categoria, on_delete= models.CASCADE, null=True)
-    foto = models.ImageField(blank=True, default="/static/imagenes/empty.jpg", upload_to='items/',verbose_name="foto")
+    foto = models.ImageField(blank=True, default="/empty.png", upload_to='items/',verbose_name="foto")
 
-    @property
-    def get_foto_url(self):
-        if self.foto and hasattr(self.foto, 'url'):
-            return self.foto.url
-        else:
-            return "/static/imagenes/empty.jpg"
+    # @property
+    # def get_foto_url(self):
+    #     if self.foto and hasattr(self.foto, 'url'):
+    #         return self.foto.url
+    #     else:
+    #         return "/static/imagenes/empty.jpg"
         
     def __str__(self):
         return self.nombre
