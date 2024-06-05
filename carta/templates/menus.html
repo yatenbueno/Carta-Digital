@@ -7,5 +7,11 @@ menus
 {% endblock %}
 
 {% block content %}
-<p>ahora estas en menus</p>
+<h1>Bebidas Disponibles</h1>
+<ul>
+    {% for plato in menus %}
+        <li>{{ plato.nombre }} - Precio: {{ plato.precio }}</li>
+        <img src="{{ plato.foto.url }}" alt="Foto" class="w-100" class="img-thumbnail" />
+    {% endfor %}
+</ul>
 {% endblock %}
