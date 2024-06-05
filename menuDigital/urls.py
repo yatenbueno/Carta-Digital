@@ -2,12 +2,12 @@ from django.contrib import admin
 from django.urls import path
 from django.conf import settings 
 from django.conf.urls.static import static
-from carta.views import BebidaView, BodegaView, CafeView, BaseView, set_language
+from carta.views import BebidaView, BodegaView, CafeteriaView, BaseView, set_language
 
 urlpatterns = [
     path('', BaseView.as_view()),
     path('admin/', admin.site.urls),
-    path('cafeteria/', CafeView.as_view()),
+    path('cafeteria/', CafeteriaView.as_view()),
     path('bebidas/', BebidaView.as_view()),
     path('bodega/', BodegaView.as_view()),
     # path('comensal/', views.comensal),

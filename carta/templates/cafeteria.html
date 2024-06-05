@@ -5,5 +5,11 @@ cafeteria
 {% endblock %}
 
 {% block content %}
-<p>ahora estas en cafeteria</p>
+<h1>Bebidas Disponibles</h1>
+<ul>
+    {% for item in cafeteria %}
+        <li>{{ item.nombre }} - Precio: {{ item.precio }}</li>
+        <img src="{{ item.foto.url }}" alt="Foto" class="w-100" class="img-thumbnail" />
+    {% endfor %}
+</ul>
 {% endblock %}

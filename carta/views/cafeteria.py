@@ -5,9 +5,9 @@ from django.views.generic.base import TemplateView
 from django.http import HttpResponse
 from carta.models import Item
 
-class CafeView(TemplateView):
-   template_name="cafe.html"
+class CafeteriaView(TemplateView):
+   template_name="cafeteria.html"
    def get_context_data(self, **kwargs):
       model = super().get_context_data(**kwargs)
-      model["cafe"] = Item.objects.filter(categoria__nombre = "cafe")
+      model["cafeteria"] = Item.objects.filter(categoria__nombre__iexact = "cafeteria")
       return model

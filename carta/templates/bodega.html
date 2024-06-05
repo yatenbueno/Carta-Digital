@@ -10,7 +10,7 @@
 <ul>
     {% for vino in bodega %}
         <li>{{ vino.nombre }} - Precio: {{ vino.precio }}</li>
-        <img src="{{ vino.foto.url }}" alt="Foto" class="w-100" width="100px" class="img-thumbnail" />
+        <img src="{{ vino.foto.url }}" alt="Foto" class="w-100" class="img-thumbnail" />
     {% endfor %}
 </ul>
-{% endblock %}_
+{% endblock %}

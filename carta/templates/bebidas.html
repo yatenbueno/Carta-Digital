@@ -9,7 +9,7 @@ Bebidas
 <ul>
     {% for bebida in bebidas %}
         <li>{{ bebida.nombre }} - Precio: {{ bebida.precio }}</li>
-        <img src="{{ bebida.foto.url }}" alt="Foto" class="w-100" width="100px" class="img-thumbnail" />
+        <img src="{{ bebida.foto.url }}" alt="Foto" class="w-100" class="img-thumbnail" />
     {% endfor %}
 </ul>
 {% endblock %}_
