@@ -1,0 +1,162 @@
+
+.event-container{
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.event-single-item{
+    width: 100%;
+    height: 390px;
+    overflow: hidden;
+    margin-bottom: 30px;
+    &:last-child{margin-bottom: 0px;}
+    position: relative;
+    @include breakpoint(medium){
+        margin-left: 15px;
+        margin-right: 15px;
+        width: calc(50% - 30px);
+    }
+    @include breakpoint(xlarge){
+        width: 33.333%;
+        margin-left: 0px;
+        margin-right: 0px;
+        margin-bottom: 0px;
+        
+    }
+
+    .wrapper{
+        transition: $transition-base;
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background: $white;
+        display: flex;
+        align-items: center;
+    }
+    
+    .image{
+        
+        img{
+            width: 100%;
+            height: 395px;
+            object-fit: cover;
+            object-position: center;
+        }
+    }
+
+    .content{
+        text-align: center;
+        padding: 0px 50px;
+        @include breakpoint(large){
+            padding: 0px 50px;
+        }
+
+    }
+
+    .title{
+        font-size: 30px;
+        line-height: 1.2;
+
+        a{
+            color: $black;
+            &:hover{
+                text-decoration: underline;
+            }
+        }
+    }
+
+    .seperate-dash{
+        border: 1px dashed #ccc;
+        width: 70px;
+        margin: 45px auto;
+    }
+
+    &:hover{
+        .wrapper{
+            transform: translateY(-395px);
+        }
+    }
+}
+
+.contact-letter{
+    background: $white;
+    padding: 25px 30px;
+    position: absolute;
+    z-index: 1;
+    width: 100%;
+    top: calc(0% + 150px);
+    left: 0;
+    @include breakpoint(small){
+        top: calc(0% + 130px);
+    }
+    @include breakpoint(medium){
+        padding: 45px 50px;
+    }
+    @include breakpoint(large){
+        padding: 85px 70px;
+    }
+}
+
+.contact-letter-single-item{
+    .address{
+        .title{
+            font-size: 30px;
+            @include breakpoint(medium){
+                font-size: 36px;
+            }
+            span{
+                color: $color-gray;
+            }
+        }
+
+        .details{
+            display: inline-block;
+            margin-top: 10px;
+        }
+
+        .mail{
+            margin-top: 35px;
+            color: $black;
+            font-weight: 600;
+
+            a{
+                font-weight: 400;
+            }
+        }
+    }
+
+    .venue{
+        .phone{
+            span{
+                display: block;
+                font-weight: 600;
+            }
+
+            .number{
+                font-size: 30px;
+                @include breakpoint(medium){
+                    font-size: 36px;
+                }
+                @include breakpoint(large){
+                    font-size: 48px;
+                }
+                a{color: $black;}
+            }
+        }
+
+        .content{
+            margin-top: 40px;
+            .title{
+                font-size: 14px;
+                color: $black;
+                font-family: $body-font;
+                font-weight: 600;
+            }
+
+            p{
+                width: 60%;
+            }
+        }
+    }
+    
+}

@@ -1,0 +1,133 @@
+/*****************************
+* Components - Sidebar Widget  
+*****************************/
+
+.sidebar-widget-area {
+    margin-top: 60px;
+
+    @include breakpoint(large) {
+        margin-top: -20px;
+    }
+}
+
+.sidebar-widget-single-item {
+    margin-bottom: 65px;
+
+    &:last-child {
+        margin-bottom: 0;
+    }
+
+    &>.title {
+        font-family: $secodary-font;
+        font-weight: 600;
+        margin-bottom: 32px;
+    }
+
+    /*Sidebar Widget Search*/
+    .sidebar-widget-search {
+        input {
+            background: #f5f5f5;
+            padding: 11px 20px;
+        }
+    }
+
+    /*Sidebar Widget Category*/
+    .sidebar-widget-category {
+        li {
+            border-bottom: 1px solid $border-color;
+            padding-top: 20px;
+            padding-bottom: 20px;
+
+            &:first-child {
+                padding-top: 0;
+            }
+
+            &:last-child {
+                padding-bottom: 0;
+                border-bottom: none;
+            }
+        }
+
+        li a {
+            display: flex;
+            justify-content: space-between;
+            color: $black;
+            text-transform: uppercase;
+
+            &:hover {
+                color: $color-primary;
+            }
+        }
+    }
+
+    /*Sidebar Widget blogpost*/
+    .sidebar-widget-blogpost {
+        li {
+            border-bottom: 1px solid $border-color;
+            padding-top: 20px;
+            padding-bottom: 20px;
+
+            &:first-child {
+                padding-top: 0;
+            }
+
+            &:last-child {
+                padding-bottom: 0;
+                border-bottom: none;
+            }
+        }
+
+        .sidebar-widget-blogpost-single-item {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+
+            .image {
+                overflow: hidden;
+                width: 80px;
+                margin-right: 20px;
+
+                img {
+                    max-width: 100%;
+                    object-fit: cover;
+                }
+            }
+
+            .content {
+                width: calc(100% - 100px);
+
+                .title {
+                    font-size: 16px;
+                    font-family: $secodary-font;
+
+                    a {
+                        color: $black;
+
+                        &:hover {
+                            color: $color-primary;
+                        }
+                    }
+
+                }
+            }
+        }
+    }
+
+
+    /*Sidebar Widget blogpost*/
+    .sidebar-widget-tag {
+        margin-bottom: -10px;
+
+        a {
+            margin-bottom: 10px;
+            margin-right: 5px;
+            font-family: $body-font;
+
+            &:last-child {
+                margin-right: 0;
+            }
+        }
+    }
+
+
+}

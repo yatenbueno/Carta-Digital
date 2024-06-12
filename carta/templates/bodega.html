@@ -6,11 +6,17 @@
 
 
 {% block content %}
-<h1>Bebidas Disponibles</h1>
-<ul>
-    {% for vino in bodega %}
-        <li>{{ vino.nombre }} - Precio: {{ vino.precio }}</li>
-        <img src="{{ vino.foto.url }}" alt="Foto" class="w-100" class="img-thumbnail" />
-    {% endfor %}
-</ul>
+<h1>Vinos Disponibles</h1>
+<div class="container text-center">
+    <div class="row">
+      {% for vino in bodega %}
+      <div class="col-md-3">
+        {{ vino.nombre }} - Precio: {{ vino.precio }}
+      </div>
+      <div class="col-md-3">
+        <img class="img-thumbnail rounded float-end" src="{{ vino.foto.url }}" alt="Foto"/>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
 {% endblock %}

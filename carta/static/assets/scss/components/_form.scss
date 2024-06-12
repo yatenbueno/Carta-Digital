@@ -1,0 +1,55 @@
+/*****************************
+* Components - Form  
+*****************************/
+
+.comment-form{
+    .content{
+        margin-bottom: 50px;
+    }
+    .title{
+        font-family: $secodary-font;
+        font-weight: 600;
+        font-size: 30px;
+    }
+}
+
+.form-group-single-item{
+    input,
+    textarea{
+        background-color: $white !important;
+        padding: 15px 20px;
+        font-size: 14px;
+        outline: none;
+        border: 1px solid $border-color;
+    }
+
+    textarea{
+        height: 220px;
+    }
+    
+}
+
+
+.contact-form{
+    background: $white;
+   padding: 45px 50px 70px 45px;
+}
+
+
+.gmap_canvas{
+    height: 360px;
+
+    @include breakpoint(medium){
+        height: 480px;
+    }
+    @include breakpoint(large){
+        height: 550px;
+    }
+    @include breakpoint(xlarge){
+        height: 640px;
+    }
+    iframe{
+        width: 100%;
+        height: 100%;
+    }
+}

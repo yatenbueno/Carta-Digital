@@ -1,0 +1,61 @@
+  {% block content %}
+  <!-- .....::::: Start Header Section :::::..... -->
+  <header class="header-section header-bg d-none d-lg-block">
+   <!-- Start Header Bottom -->
+   <div class="header-bottom sticky-header">
+     <div class="container">
+       <div class="row align-items-center justify-content-between">
+         <div class="col">
+            <!-- Start Header Logo -->
+            <div class="logo">
+              <a href=""><img class="img-fluid" src="static/assets/images/logo/logo.png" alt=""></a>
+            </div>
+            <!-- End Header Logo -->
+    
+         </div>
+         <div class="col-auto">
+           <!-- Start Header Menu -->
+           <div class="header-bottom-menu">
+             {% comment %} <!-- Start Header Reservation Link -->
+             <div class="header-bottom-reservation-link text-end">
+               <a href="#">Reserva</a>
+             </div>
+             <!-- End Header Reservation Link --> {% endcomment %}
+             <ul class="main-menu">
+               <li><a href="menu.html">Reserva</a></li>
+               <li><a href="menu.html">Menu</a></li>
+               <li><a href="gallery.html">Galería</a></li>
+               {% comment %} <li class="menu-center-space"></li> {% endcomment %}
+               <li class="has-dropdown">
+                 <a href="news.html">News</a>
+                 <ul class="sub-menu">
+                   <li><a href="news.html">News</a></li>
+                   <li><a href="news-single.html">News Details</a></li>
+                 </ul>
+               </li>
+               <li class="has-dropdown">
+                 <a href="#">Pages</a>
+                 <ul class="sub-menu">
+                   <li><a href="contact.html">Contact</a></li>
+                   <li><a href="about-us.html">About Us</a></li>
+                 </ul>
+               </li>
+             </ul>
+           </div>
+           <!-- End Header Menu -->
+         </div>
+         <div class="col">
+           <!-- FORM BUSCADOR -->
+           <form class="d-flex justify-content-right col-8 float-end" role="search">
+            <input class="form-control me-2" type="search" placeholder="Lo que desee buscar..." aria-label="Search">
+            <button class="btn btn-dark" type="submit">Buscar</button>
+           </form>
+           <!-- End FORM BUSCADOR -->
+         </div>
+       </div>
+     </div>
+   </div>
+   <!-- End Header Bottom -->
+ </header>
+ <!-- .....::::: End Header Section :::::..... -->
+{% endblock %}

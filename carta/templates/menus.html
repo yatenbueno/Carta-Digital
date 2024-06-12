@@ -7,11 +7,17 @@ menus
 {% endblock %}
 
 {% block content %}
-<h1>Bebidas Disponibles</h1>
-<ul>
-    {% for plato in menus %}
-        <li>{{ plato.nombre }} - Precio: {{ plato.precio }}</li>
-        <img src="{{ plato.foto.url }}" alt="Foto" class="w-100" class="img-thumbnail" />
-    {% endfor %}
-</ul>
+<h1>Menus Disponibles</h1>
+<div class="container text-center">
+    <div class="row">
+      {% for menu in menus %}
+      <div class="col-md-3">
+        {{ menu.nombre }} - Precio: {{ menu.precio }}
+      </div>
+      <div class="col-md-3">
+        <img class="img-thumbnail rounded float-end" src="{{ menu.foto.url }}" alt="Foto"/>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
 {% endblock %}

@@ -1,0 +1,10 @@
+/*****************************
+* Layout - Header
+*****************************/
+
+.header-bg{
+    background: $color-primary;
+}
+
+@import "header/_header-desktop.scss";
+@import "header/_header-mobile.scss";

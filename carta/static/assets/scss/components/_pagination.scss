@@ -1,0 +1,21 @@
+/*****************************
+* Components - Pagination  
+*****************************/
+
+.page-pagination{
+    margin-top: 60px;
+
+    @include breakpoint(large){
+        margin-top: 80px;
+        margin-bottom: 0px;
+    }
+
+    a{
+        margin-right: 45px;
+        &:last-child{margin-right: 0;}
+        color: $black;
+        &.active{
+            font-weight: 600;
+        }
+    }
+}

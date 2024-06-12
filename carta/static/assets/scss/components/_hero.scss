@@ -1,0 +1,80 @@
+/*****************************
+* Components - Hero  
+*****************************/
+
+.hero-img{
+    width: 100%;
+    overflow: hidden;
+    height: 480px;
+    @include breakpoint(small){
+        height:576px;
+    }
+    @include breakpoint(medium){
+        height: 768px;
+    }
+    @include breakpoint(xxlarge){
+        height: 935px;
+    }
+    img{
+        object-fit: cover;
+        height: 100%;
+    }
+
+}
+
+.hero-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: $white;
+    width: 100%;
+
+    .sub-title-small{
+        font-family: $secodary-font;
+        font-size: 18px;
+        letter-spacing: 5px;
+        text-transform: uppercase;
+        opacity: .75;
+        color: $white;
+    }
+
+    .title{
+        font-size: 45px;
+        letter-spacing: -2.5px;
+        line-height: .9;
+        margin-top: 20px;
+        margin-bottom: 20px;
+        color: $white;
+
+        @include breakpoint(small){
+            font-size: 60px;
+            margin-top: 40px;
+            margin-bottom: 40px;
+        }
+        @include breakpoint(medium){
+            font-size: 70px;
+        }
+        @include breakpoint(large){
+            font-size: 90px;
+        }
+        @include breakpoint(xlarge){
+            font-size: 100px;
+            margin-top: 80px;
+            margin-bottom: 80px;
+        } 
+    }
+
+    p{
+        font-family: $secodary-font;
+        opacity: .75;
+        width: 100%;
+        margin: 0 auto;
+        letter-spacing: 2.5px;
+        line-height: 1.8;
+
+        @include breakpoint(xxlarge){
+            width: 65%;
+        }
+    }
+}

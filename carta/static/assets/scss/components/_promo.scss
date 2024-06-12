@@ -1,0 +1,54 @@
+/*****************************
+* Components - Promo  
+*****************************/
+.promo-single-item{
+    margin-top: -20px;
+    margin-bottom: -20px;
+}
+.promo-top {
+    display: flex;
+    align-items: center;
+
+    .check-icon {
+        font-size: 60px;
+        color: $color-orange;
+        margin-right: 30px;
+    }
+
+    .title {
+        font-size: 30px;
+        font-style: italic;
+        font-weight: 600;
+        color: $color-primary;
+        width: 100%;
+
+        @include breakpoint(xlarge){
+            width: 50%;
+        }
+    }
+}
+
+.promo-bottom{
+    display: flex;
+    .promo-num{
+        font-family: $secodary-font;
+        font-size: 48px;
+        font-weight: 400;
+        color: $color-gray;
+        margin-left: 15px;
+        margin-right: 50px;
+        line-height: 1;
+    }
+
+    p{
+        font-family: $secodary-font;
+        color: $color-dark-gray;
+        font-size: 14px;
+        margin-top: 10px;
+        width: 100%;
+
+        @include breakpoint(xlarge){
+            width: 60%;
+        }
+    }
+}

@@ -1,0 +1,93 @@
+/*****************************
+* Pages - Gallery
+*****************************/
+
+.gallery-grid {
+    margin-bottom: -30px;
+
+    &-single-item {
+        margin-bottom: 30px;
+        overflow: hidden;
+        float: left;
+        cursor: pointer;
+        margin-right: 15px;
+        margin-left: 15px;
+
+        img {
+            transition: $transition-base;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: top;
+
+            &:hover {
+                transform: scale(1.03);
+            }
+        }
+    }
+
+    .grid-sizer {
+        width: calc(100%);
+
+        @include breakpoint(small) {
+            width: calc(50%);
+        }
+
+        @include breakpoint(large) {
+            width: calc(33.333%);
+        }
+    }
+
+    .gallery-grid-normal {
+        width: calc(100% - 30px);
+        height: 370px;
+
+        @include breakpoint(small) {
+            width: calc(50% - 30px);
+            height: 250px;
+        }
+
+        @include breakpoint(large) {
+            width: calc(33.333% - 30px);
+            height: 370px;
+        }
+
+    }
+
+    .gallery-grid-xl {
+        width: calc(100% - 30px);
+        height: 370px;
+
+        @include breakpoint(small) {
+            width: calc(50% - 30px);
+            height: 250px;
+        }
+
+        @include breakpoint(large) {
+            width: calc(66.666% - 30px);
+            height: 770px;
+        }
+
+    }
+
+    .gallery-grid-landscape {
+        width: calc(100% - 30px);
+        height: 370px;
+
+        @include breakpoint(small) {
+            width: calc(50% - 30px);
+            height: 250px;
+        }
+
+        @include breakpoint(large) {
+            width: calc(66.666% - 30px);
+            height: 370px;
+        }
+
+    }
+}
+
+
+// .gallery-masonry{
+//     max-width: 1200px;
+// }

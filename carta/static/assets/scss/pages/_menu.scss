@@ -1,0 +1,82 @@
+/*****************************
+* Pages - Menu
+*****************************/
+
+.food-item-menu{
+    background: $white;
+    padding: 25px 40px;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    @include breakpoint(large){
+        flex-direction: row;
+    }
+    @include breakpoint(medium){
+        padding: 45px 60px;
+    }
+    @include breakpoint(large){
+        padding: 85px 90px;
+    }
+}
+
+.food-item-menu-list{
+    width: 100%;
+    @include breakpoint(large){
+      width: calc(50% - 40px);
+    } 
+
+    &:last-child{
+        li:last-child{
+            border-bottom: none;
+        }
+    }
+
+    li{
+        border-bottom: 1px solid $border-color;
+        padding-top: 24px;
+        padding-bottom: 21px;
+
+        &:first-child{
+           @include breakpoint(large){
+                padding-top: 0;
+            }
+           } 
+
+        &:last-child{
+            @include breakpoint(large){
+                padding-bottom: 0;
+                border-bottom: none;
+            }
+        }
+    }
+
+
+    .content{
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        
+        .name{
+            width: calc(90% - 50px);
+            margin-right: 50px;
+            .title{
+                font-size: 24px;
+                line-height: 1.25;
+                font-family: $secodary-font;
+                font-weight: 600;
+            }
+
+            p{
+                font-family: $secodary-font;
+                margin-bottom: 0;
+            }
+        }
+
+        .price{
+            font-size: 24px;
+            font-family: $secodary-font;
+            font-weight: 600;
+            color: #ad9a7c;
+        }
+    }
+}

@@ -1,0 +1,21 @@
+
+.mobile-header-section{
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+.mobile-logo {
+    height: auto;
+    width: 50px;
+
+    img {
+        width: 100%;
+    }
+}
+
+.mobile-action-link{
+    a{
+        font-size: 36px;
+        color: $white;
+    }
+}
+
