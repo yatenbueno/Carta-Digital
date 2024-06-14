@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.humanize',
     'carta', # referencio la carta
+    'login', # referencio la app para login
 ]
 
 MIDDLEWARE = [
