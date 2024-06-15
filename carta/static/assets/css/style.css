@@ -6827,6 +6827,7 @@ textarea.form-control-lg {
 
 .justify-content-center {
   justify-content: center !important;
+  padding-top: 50px;
 }
 
 .justify-content-between {
@@ -14853,8 +14854,8 @@ input, textarea {
 }
 @media (min-width: 992px) {
   .section-padding {
-    padding-top: 65px;
-    padding-bottom: 10px;
+    padding-top: 0px;
+    padding-bottom: 80px;
   }
 }
 
@@ -16751,8 +16752,11 @@ input, textarea {
 *****************************/
 .footer-section {
   background: #79271f;
-  padding-top: 0px;
-  padding-bottom: 10px;
+  position: fixed;
+  left: 0px;
+  bottom: 0px;
+  height: 30px;
+  width: 100%;
 }
 
 .footer-bottom-gap-60 {

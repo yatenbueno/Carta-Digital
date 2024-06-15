@@ -2,7 +2,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views import View
-from .forms import LoginForm, RegistroForm
+from ..forms import LoginForm, RegistroForm
 
 
 class RegistroView(View):

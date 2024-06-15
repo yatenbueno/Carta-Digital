@@ -2,9 +2,7 @@ from django.contrib import admin
 from django.urls import path
 from django.conf import settings 
 from django.conf.urls.static import static
-from carta.views import BebidaView, BodegaView, CafeteriaView, MenuView, BaseView, set_language
-from login.views import LoginView, RegistroView, logout_view
-
+from carta.views import BebidaView, BodegaView, CafeteriaView, MenuView, BaseView, set_language, LoginView, RegistroView, logout_view
 urlpatterns = [
     # URLS de la Carta
     path('', BaseView.as_view(), name="index"),

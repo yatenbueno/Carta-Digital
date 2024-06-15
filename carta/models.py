@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 class Categoria(models.Model):
     nombre = models.CharField(max_length=100)
@@ -22,11 +23,22 @@ class Item(models.Model):
         
     def __str__(self):
         return self.nombre
+    
+class Cliente(models.Model):
+    nombre = models.CharField(max_length=50, null=False)
+    apellido = models.CharField(max_length=50, null=False)
+    dni = models.IntegerField(max_length=8, unique=True, null=False)
+    fecha_nacimiento = models.DateField(verbose_name="Fecha de nacimiento")
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.nombre +', '+ self.apellido
 
 class Pedido(models.Model):
     items = models.ManyToManyField(Item, blank=True, related_name="items", through='PedidoItem')
     monto_total = models.FloatField(null=False, default=0, verbose_name="Monto total")
-    fecha = models.DateTimeField
+    fecha = models.DateTimeField()
+    cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE)
     
     def calcular_monto(self):
         monto_total = 0
@@ -59,16 +71,6 @@ class PedidoItem(models.Model):
 
     def __str__(self):
         return f"{self.cantidad_seleccionada} cantidad seleccionada de {self.item.nombre} en Pedido {self.pedido.id}"
-
-class Cliente(models.Model):
-    nombre = models.CharField(max_length=50, null=False)
-    apellido = models.CharField(max_length=50, null=False)
-    dni = models.IntegerField(max_length=8, unique=True, null=False)
-    fecha_nacimiento = models.DateField(verbose_name="Fecha de nacimiento")
-    pedido = models.ForeignKey(Pedido, on_delete=models.CASCADE)
-
-    def __str__(self):
-        return self.nombre +', '+ self.apellido
 
 class Reserva(models.Model):
     cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE)
