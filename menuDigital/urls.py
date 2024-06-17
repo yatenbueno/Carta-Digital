@@ -14,7 +14,7 @@ urlpatterns = [
     # URLS DE LOGIN
     path('login/', LoginView.as_view(), name='login'),
     path('logout/', logout_view, name='logout'),
-    path('registro/', RegistroView.as_view(), name='registro'),
+    path('register/', RegistroView.as_view(), name='register'),
     ]
 
 if settings.DEBUG:

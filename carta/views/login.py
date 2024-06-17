@@ -8,7 +8,7 @@ from ..forms import LoginForm, RegistroForm
 class RegistroView(View):
     def get(self, request):
         form = RegistroForm()
-        return render(request, 'registro.html', {'form': form})
+        return render(request, 'register.html', {'form': form})
 
     def post(self, request):
         form = RegistroForm(request.POST)
@@ -16,7 +16,7 @@ class RegistroView(View):
             user = form.save()
             login(request, user)
             return redirect('index')
-        return render(request, 'registro.html', {'form': form})
+        return render(request, 'register.html', {'form': form})
 
 
 class LoginView(View):

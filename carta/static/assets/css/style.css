@@ -14854,7 +14854,7 @@ input, textarea {
 }
 @media (min-width: 992px) {
   .section-padding {
-    padding-top: 0px;
+    /* padding-top: 0px; */
     padding-bottom: 80px;
   }
 }
@@ -16757,6 +16757,7 @@ input, textarea {
   bottom: 0px;
   height: 30px;
   width: 100%;
+  padding-top: 0px;
 }
 
 .footer-bottom-gap-60 {
