@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.urls import path
 from django.conf import settings 
 from django.conf.urls.static import static
-from carta.views import BebidaView, BodegaView, CafeteriaView, MenuView, BaseView, set_language, LoginView, RegistroView, logout_view
+from carta.views import BebidaView, BodegaView, CafeteriaView, MenuView, BaseView, set_language
 urlpatterns = [
     # URLS de la Carta
     path('', BaseView.as_view(), name="index"),
@@ -12,9 +12,7 @@ urlpatterns = [
     path('bodega/', BodegaView.as_view()),
     path('menus/', MenuView.as_view()),
     # URLS DE LOGIN
-    path('login/', LoginView.as_view(), name='login'),
-    path('logout/', logout_view, name='logout'),
-    path('register/', RegistroView.as_view(), name='register'),
+    
     ]
 
 if settings.DEBUG:

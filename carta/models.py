@@ -25,11 +25,9 @@ class Item(models.Model):
         return self.nombre
     
 class Cliente(models.Model):
-    nombre = models.CharField(max_length=50, null=False)
-    apellido = models.CharField(max_length=50, null=False)
     dni = models.IntegerField(max_length=8, unique=True, null=False)
     fecha_nacimiento = models.DateField(verbose_name="Fecha de nacimiento")
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, null=True, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.nombre +', '+ self.apellido
