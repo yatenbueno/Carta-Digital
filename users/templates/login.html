@@ -26,7 +26,10 @@
                       {% endfor %}
                   </div>
               {% endif %}
-              <button type="submit" class="btn btn-primary btn-block">Iniciar Sesión</button>
+              <div class="d-flex justify-content-between">
+                <button type="submit" class="btn btn-primary btn-block">Iniciar Sesión</button>
+                <a href="{% url 'register' %}" class="btn btn-primary">Registrarse</a>
+              </div>
           </form>
       </div>
   </div>

@@ -1,0 +1,82 @@
+
+/* Estilos para la lista */
+html, body {
+   height: 100%;
+   margin: 0;
+   padding: 0;
+   overflow: scroll;
+   background: rgb(245, 245, 247);
+   box-shadow:20% black;
+}
+.buscador input[type="text"] {
+   /* Estilos para el campo de texto en el formulario de búsqueda */
+   padding: 8px;
+   font-size: 16px;
+   border: 2px solid #ccc;
+   border-radius: 5px;
+}
+.buscador input[type="submit"] {
+   /* Estilos para el botón de envío en el formulario de búsqueda */
+   padding: 8px 12px;
+   font-size: 16px;
+   border: none;
+   border-radius: 5px;
+   background-color: #007bff;
+   color: #fff;
+   cursor: pointer;
+}
+.buscador input[type="submit"]:hover {
+   background-color: #0056b3;
+}
+
+img.w-100{
+   width: 100px;
+}
+img {
+   width: auto;
+   display: block;
+   margin: auto; /* Centra la imagen horizontalmente */
+}
+ul {
+   list-style-type: none; /* Quita los puntos de la lista */
+   margin: 0; /* Elimina el margen por defecto */
+   padding: 40px ; /* Elimina el relleno por defecto */
+   overflow: hidden; /* Evita que los elementos floten */
+}
+li {
+   float: left; /* Alinea los elementos a la izquierda */
+}
+/* Estilos para los enlaces */
+li a {
+   display: block; /* Convierte los enlaces en bloques */
+   text-align: center; /* Centra el texto dentro del enlace */
+   padding: 14px 16px; /* Añade relleno alrededor del texto */
+   text-decoration: none; /* Quita la subrayado del texto */
+   color: black; /* Color del texto */
+}
+li a:hover {
+   background-color: #ddd; /* Cambia el color de fondo al pasar el ratón */
+}
+.language-form {
+   position: absolute;
+   top: 20px;
+   right: 20px;
+}
+.language-form select {
+   padding: 8px;
+   font-size: 16px;
+   border: 2px solid #ccc;
+   border-radius: 5px;
+}
+.language-form button {
+   padding: 8px 12px;
+   font-size: 16px;
+   border: none;
+   border-radius: 5px;
+   background-color: #007bff;
+   color: #fff;
+   cursor: pointer;
+}
+.language-form button:hover {
+   background-color: #0056b3;
+}

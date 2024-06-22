@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import User
+from django.contrib.auth.models import BaseUserManager, AbstractBaseUser, User
 
 class Categoria(models.Model):
     nombre = models.CharField(max_length=100)
@@ -23,20 +23,48 @@ class Item(models.Model):
         
     def __str__(self):
         return self.nombre
-    
+
+
+class ClienteManager(BaseUserManager):
+    def create_cliente(self, username, email, password, first_name, last_name, dni, fecha_nacimiento):
+        # Crear el usuario
+        user = User.objects.create_user(
+            username=username,
+            email=email,
+            password=password,
+            first_name=first_name,
+            last_name=last_name
+        )
+
+        # Crear el cliente asociado al usuario
+        cliente = self.model(
+            user=user,
+            dni=dni,
+            fecha_nacimiento=fecha_nacimiento
+        )
+        cliente.save(using=self._db)
+        return cliente
+
+from django.contrib.auth.models import User
+from django.db import models
+
 class Cliente(models.Model):
-    dni = models.IntegerField(max_length=8, unique=True, null=False)
+    dni = models.CharField(max_length=8, unique=True, null=False)
     fecha_nacimiento = models.DateField(verbose_name="Fecha de nacimiento")
     user = models.OneToOneField(User, null=True, on_delete=models.CASCADE)
 
-    def __str__(self):
-        return self.nombre +', '+ self.apellido
+    objects = ClienteManager()
 
+    def __str__(self):
+        return f"{self.user.first_name}, {self.user.last_name}"
+
+
+from datetime import datetime
 class Pedido(models.Model):
     items = models.ManyToManyField(Item, blank=True, related_name="items", through='PedidoItem')
     monto_total = models.FloatField(null=False, default=0, verbose_name="Monto total")
-    fecha = models.DateTimeField()
-    cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE)
+    fecha = models.DateTimeField(null=True, default=datetime.now)
+    cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE, null=True)
     
     def calcular_monto(self):
         monto_total = 0

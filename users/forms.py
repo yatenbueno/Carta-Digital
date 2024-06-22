@@ -12,10 +12,12 @@ class RegistroForm(UserCreationForm):
     email = forms.EmailField(required=True, widget=forms.EmailInput(attrs={'class': 'form-control'}))
     first_name = forms.CharField(required=True, widget=forms.TextInput(attrs={'class': 'form-control'}))
     last_name = forms.CharField(required=True, widget=forms.TextInput(attrs={'class': 'form-control'}))
+    dni = forms.CharField(max_length=8, required=True, widget=forms.TextInput(attrs={'class': 'form-control'}))
+    fecha_nacimiento = forms.DateField(required=True, widget=forms.DateInput(attrs={'class': 'form-control', 'type': 'date'}))
 
     class Meta:
         model = User
-        fields = ["username", "first_name", "last_name", "email", "password1", "password2"]
+        fields = ["username", "first_name", "last_name", "email", "password1", "password2", 'dni', 'fecha_nacimiento']
 
     def __init__(self, *args, **kwargs):
         super(RegistroForm, self).__init__(*args, **kwargs)
