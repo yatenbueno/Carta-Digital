@@ -3,4 +3,5 @@ from .bodega import BodegaView
 from .cafeteria import CafeteriaView
 from .base import BaseView
 from .menu import MenuView
+from .paginate import PaginateIndexView
 from .set_language import set_language
