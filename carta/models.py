@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import BaseUserManager, AbstractBaseUser, User
+from django.contrib.auth.models import BaseUserManager, User
 
 class Categoria(models.Model):
     nombre = models.CharField(max_length=100)
@@ -14,13 +14,6 @@ class Item(models.Model):
     categoria = models.ForeignKey(Categoria, on_delete= models.CASCADE, null=True)
     foto = models.ImageField(blank=True, default="/empty.png", upload_to='items/',verbose_name="foto")
 
-    # @property
-    # def get_foto_url(self):
-    #     if self.foto and hasattr(self.foto, 'url'):
-    #         return self.foto.url
-    #     else:
-    #         return "/static/imagenes/empty.jpg"
-        
     def __str__(self):
         return self.nombre
 
@@ -44,9 +37,6 @@ class ClienteManager(BaseUserManager):
         )
         cliente.save(using=self._db)
         return cliente
-
-from django.contrib.auth.models import User
-from django.db import models
 
 class Cliente(models.Model):
     dni = models.CharField(max_length=8, unique=True, null=False)

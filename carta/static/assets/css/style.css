@@ -602,7 +602,7 @@ progress {
 }
 
 .img-fluid {
-  max-width: 20%;
+  max-width: 60%;
   height: auto;
   padding: 6px;
 }
@@ -3895,8 +3895,7 @@ textarea.form-control-lg {
   border: 0;
 }
 .dropdown-item:hover, .dropdown-item:focus {
-  color: #1e2125;
-  background-color: #f8f9fa;
+  color:#0088a9 !important
 }
 .dropdown-item.active, .dropdown-item:active {
   color: #fff;
@@ -4393,13 +4392,13 @@ textarea.form-control-lg {
   color: #fff;
 }
 .navbar-dark .navbar-brand:hover, .navbar-dark .navbar-brand:focus {
-  color: #fff;
+  color:#0088a9 !important
 }
 .navbar-dark .navbar-nav .nav-link {
   color: rgba(255, 255, 255, 0.55);
 }
 .navbar-dark .navbar-nav .nav-link:hover, .navbar-dark .navbar-nav .nav-link:focus {
-  color: rgba(255, 255, 255, 0.75);
+  color:#0088a9 !important;
 }
 .navbar-dark .navbar-nav .nav-link.disabled {
   color: rgba(255, 255, 255, 0.25);
@@ -4421,7 +4420,7 @@ textarea.form-control-lg {
 .navbar-dark .navbar-text a,
 .navbar-dark .navbar-text a:hover,
 .navbar-dark .navbar-text a:focus {
-  color: #fff;
+  color:#0088a9 !important
 }
 
 .card {
@@ -4718,6 +4717,10 @@ textarea.form-control-lg {
 .pagination .page-item {
   padding-left: 5px;
   padding-right: 5px;
+}
+
+.pagination a:hover {
+  color:#0088a9 !important  
 }
 
 .page-link {
@@ -6801,7 +6804,8 @@ textarea.form-control-lg {
 
 .justify-content-center {
   justify-content: center !important;
-  padding-top: 50px;
+  padding-top: 35px;
+  padding-bottom: 35px;
 }
 
 .justify-content-between {
@@ -15123,8 +15127,7 @@ input, textarea {
   font-weight: 400;
 }
 .btn-primary:focus, .btn-primary:active, .btn-primary:hover {
-  background: #fff !important;
-  color: #212529 !important;
+  color:#0088a9 !important;
   border-color: #212529 !important;
 }
 .btn-outline-primary {
