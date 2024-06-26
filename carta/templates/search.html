@@ -23,38 +23,23 @@ Carta-Digital
             <!-- PAGINATION -->
             <div class="row mt-3 justify-content-center">
                 <div class="">
-                <nav>
-                    <ul class="pagination">
-                    <!-- Estoy en una página del medio por lo cual puedo ir para atra -->
-                    {% if items.has_previous %}
-                        <li class="page-item">
-                        <a class="page-link" href="?page=1">Primera</a>
-                        </li>
-                        <li class="page-item">
-                        <a class="page-link" href="?page={{ items.previous_page_number }}">&laquo;</a>
-                        </li>
-                    {% else %}
-                    <!-- Si estoy en la primera página entonces deshabilito el botón 1 ya que no hay página previa -->
-                        <li class="page-item disabled">
-                        <a class="page-link" href="?page=1">Primera</a>
-                        </li>
-                    {% endif %}
-                    <!-- Si hay página siguiente entonces habilito el botón de la página siguiente y el de la última -->
-                    {% if items.has_next %}
-                        <li class="page-item">
-                        <a class="page-link" href="?page={{ items.next_page_number }}">&raquo;</a>
-                        </li>
-                        <li class="page-item">
-                        <a class="page-link" href="?page={{ items.paginator.num_pages }}">Última</a>
-                        </li>
-                    {% else %}
-                    <!-- No hay página siguiente por lo cual estoy en la última, entonces deshabilito el botón de la última página -->
-                    <li class="page-item disabled">
-                        <a class="page-link" href="#">Última</a>
-                    </li>  
-                    {% endif %}
-                    </ul>
-                </nav>
+                    <nav>
+                        <ul class="pagination">
+                            <!-- Mostrar las páginas en el medio -->
+                            {% for page_num in total_pages %}
+                                {% if page_num == current_page %}
+                                    <li class="page-item disabled">
+                                        <a class="page-link" href="#">{{ page_num }}</a>
+                                    </li>
+                                {% else %}
+                                    <li class="page-item">
+                                        <a class="page-link" href="?searched={{ searched }}&page={{ page_num }}">{{ page_num }}</a>
+                                    </li>
+                                {% endif %}
+                            {% endfor %}
+                        </ul>
+                    </nav>
+                                        
                 </div>
             </div>
         {% else %}

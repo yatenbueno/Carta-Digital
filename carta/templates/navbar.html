@@ -31,8 +31,9 @@
                 </li>
             </ul>
 
-            <form class="d-flex" role="search">
-                <input class="form-control me-2" type="search" placeholder="Un item..." aria-label="Search">
+            <form class="d-flex" role="search" method="POST" action="{% url 'search-view' %}">
+                {% csrf_token %}
+                <input class="form-control me-2" type="search" placeholder="Un item..." aria-label="Search" name="searched">
                 <button class="btn btn-outline-success active" type="submit">Buscar</button>
             </form>
         </div>
