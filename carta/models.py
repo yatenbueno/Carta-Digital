@@ -54,7 +54,7 @@ class Pedido(models.Model):
     items = models.ManyToManyField(Item, blank=True, related_name="items", through='PedidoItem')
     monto_total = models.FloatField(null=False, default=0, verbose_name="Monto total")
     fecha = models.DateTimeField(null=True, default=datetime.now)
-    cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE, null=True)
+    cliente = models.ForeignKey(Cliente, null=True, on_delete=models.CASCADE)
     
     def calcular_monto(self):
         monto_total = 0
@@ -74,9 +74,9 @@ class Pedido(models.Model):
 class Pedido(models.Model):
     items = models.ManyToManyField(Item, blank=True, related_name="items", through='PedidoItem')
     monto_total = models.FloatField(null=False, default=0, verbose_name="Monto total")
-    fecha = models.DateTimeField(auto_now_add=True)  # Definido con auto_now_add para establecer la fecha automáticamente al crear un pedido
-    cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE)
-    completado= models.BooleanField(default=False)
+    fecha = models.DateTimeField(null=True, auto_now_add=True)  # Definido con auto_now_add para establecer la fecha automáticamente al crear un pedido
+    cliente = models.ForeignKey(Cliente, null=True, on_delete=models.CASCADE)
+    completado= models.BooleanField(default=False, null=True)
 
     def calcular_monto(self):
         monto_total = 0

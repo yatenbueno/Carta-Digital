@@ -3023,8 +3023,8 @@ textarea.form-control-lg {
 }
 .input-group > :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(.valid-feedback):not(.invalid-tooltip):not(.invalid-feedback) {
   margin-left: -1px;
-  border-top-left-radius: 0;
-  border-bottom-left-radius: 0;
+  /* border-top-left-radius: 0;
+  border-bottom-left-radius: 0; */
 }
 
 .valid-feedback {
@@ -14719,7 +14719,7 @@ body {
   position: relative;
   visibility: visible;
   background: #fff;
-  color: #999;
+  color: black;
 }
 body[dir=rtl] {
   text-align: right;

@@ -16,7 +16,6 @@ urlpatterns = [
     path('menus/', PaginateMenusView),
     path('search/', SearchView, name="search-view"),
     # URLS DE LOGIN
-    # path('users/', include('django.contrib.auth.urls')),
     path('users/', include('users.urls')),
 
     #CARRITO

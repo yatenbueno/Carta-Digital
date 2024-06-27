@@ -11,7 +11,7 @@ Cafetería
       {% for producto in cafeteria %}
       <div class="col-md-3">
         {{ producto.nombre }} - Precio: {{ producto.precio }}
-        <form method="post" action="{% url 'actualizar_cantidad' producto.id %}">
+        <form method="post" action="{% url 'agregar-al-carrito' producto.id %}">
           {% csrf_token %}
           <div class="input-group">
               <input type="number" name="cantidad" value="{{ producto.cantidad_seleccionada }}" min="1" max="{{ producto.cantidad_stock }}" class="form-control">

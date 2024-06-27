@@ -11,7 +11,7 @@ Menús
       {% for menu in menus %}
       <div class="col-md-3">
         {{ menu.nombre }} - Precio: {{ menu.precio }}
-        <form method="post" action="{% url 'actualizar_cantidad' menu.id %}">
+        <form method="post" action="{% url 'agregar-al-carrito' menu.id %}">
           {% csrf_token %}
           <div class="input-group">
               <input type="number" name="cantidad" value="{{ menu.cantidad_seleccionada }}" min="1" max="{{ menu.cantidad_stock }}" class="form-control">

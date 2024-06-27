@@ -12,7 +12,7 @@
       {% for vino in bodega %}
       <div class="col-md-3">
         {{ vino.nombre }} - Precio: {{ vino.precio }}
-        <form method="post" action="{% url 'actualizar_cantidad' vino.id %}">
+        <form method="post" action="{% url 'agregar-al-carrito' vino.id %}">
           {% csrf_token %}
           <div class="input-group">
               <input type="number" name="cantidad" value="{{ vino.cantidad_seleccionada }}" min="1" max="{{ vino.cantidad_stock }}" class="form-control">
