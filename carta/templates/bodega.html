@@ -12,6 +12,13 @@
       {% for vino in bodega %}
       <div class="col-md-3">
         {{ vino.nombre }} - Precio: {{ vino.precio }}
+        <form method="post" action="{% url 'actualizar_cantidad' vino.id %}">
+          {% csrf_token %}
+          <div class="input-group">
+              <input type="number" name="cantidad" value="{{ vino.cantidad_seleccionada }}" min="1" max="{{ vino.cantidad_stock }}" class="form-control">
+              <button type="submit" class="btn btn-primary ms-2">Actualizar</button>
+          </div>
+        </form>
       </div>
       <div class="col-md-3">
         <img class="img-fluid" src="{{ vino.foto.url }}" alt="Foto"/>

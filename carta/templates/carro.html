@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <h3 class="mb-4">Tu pedido está casi listo</h3>
+
+    {% if items_carrito %}
+    <div class="table-responsive">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Producto</th>
+                    <th>Precio</th>
+                    <th>Cantidad</th>
+                    <th>Subtotal</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in items_carrito %}
+                <tr>
+                    <td>{{ item.item.nombre }}</td>
+                    <td>${{ item.item.precio }}</td>
+                    <td>
+                        <form method="post" action="{% url 'actualizar_cantidad' item.id %}">
+                            {% csrf_token %}
+                            <div class="input-group">
+                                <input type="number" name="cantidad" value="{{ item.cantidad_seleccionada }}" min="1" max="{{ item.item.cantidad_stock }}" class="form-control">
+                                <button type="submit" class="btn btn-primary ms-2">Actualizar</button>
+                            </div>
+                        </form>
+                    </td>
+                    <td>${{ item.subtotal }}</td>
+                    <td>
+                        <form method="post" action="{% url 'eliminar_del_pedido' item.id %}">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-danger">Eliminar</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <div class="row mt-4">
+        <div class="col-md-6">
+            <div class="total-carrito">
+                <p class="fw-bold text-center">Total: ${{ total_carrito }}</p>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="text-end">
+                <form method="post" action="{% url 'pagar_pedido' %}">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-primary">Confirmá tu pedido</button>
+                </form>
+                <a href="{% url 'lista-productos' %}" class="btn btn-secondary mt-2 d-block">Seguir Comprando</a>
+            </div>
+        </div>
+    </div>
+
+    {% else %}
+    <p class="text-muted">El carrito está vacío.</p>
+    {% endif %}
+</div>
+
+<!-- Mensajes de éxito o error -->
+{% if messages %}
+<div class="container mt-4">
+    <div class="alert alert-info">
+        <ul class="list-unstyled">
+            {% for message in messages %}
+            <li>{{ message }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+{% endif %}
+{% endblock %}
