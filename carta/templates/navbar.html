@@ -1,8 +1,6 @@
 <nav class="navbar navbar-expand-lg bg-body-tertiary fixed-top navbar-dark bg-dark">
     <div class="container-fluid">
-        <a class="navbar-brand" href="/">
-            Carta-Digital
-        </a>
+        <a class="navbar-brand" href="/">Carta-Digital</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -35,12 +33,16 @@
                     </ul>
                 </li>
             </ul>
-
-            <form class="d-flex" role="search" method="POST" action="{% url 'search-view' %}">
-                {% csrf_token %}
-                <input class="form-control me-2" type="search" placeholder="Un item..." aria-label="Search" name="searched">
-                <button class="btn btn-outline-success active" type="submit">Buscar</button>
-            </form>
+            <div class="d-flex align-items-center">
+                <span class="nav-link active text-white me-3">
+                    Bienvenido: <span>{{ user.username }}</span>
+                </span>
+                <form class="d-flex" role="search" method="POST" action="{% url 'search-view' %}">
+                    {% csrf_token %}
+                    <input class="form-control me-2" type="search" placeholder="Un item..." aria-label="Search" name="searched">
+                    <button class="btn btn-outline-success active" type="submit">Buscar</button>
+                </form>
+            </div>
         </div>
     </div>
 </nav>
