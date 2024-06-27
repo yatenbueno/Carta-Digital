@@ -34,9 +34,11 @@
                 </li>
             </ul>
             <div class="d-flex align-items-center">
-                <span class="nav-link active text-white me-3">
-                    Bienvenido: <span>{{ user.username }}</span>
-                </span>
+                {% if user.is_authenticated %}
+                    <span class="nav-link active text-white me-3">
+                        Bienvenido: <span>{{ user.username }}</span>
+                    </span>
+                {% endif %}
                 <form class="d-flex" role="search" method="POST" action="{% url 'search-view' %}">
                     {% csrf_token %}
                     <input class="form-control me-2" type="search" placeholder="Un item..." aria-label="Search" name="searched">

@@ -15,7 +15,7 @@ Cafetería
           {% csrf_token %}
           <div class="input-group">
               <input type="number" name="cantidad" value="{{ producto.cantidad_seleccionada }}" min="1" max="{{ producto.cantidad_stock }}" class="form-control">
-              <button type="submit" class="btn btn-primary ms-2">Agregar al Pedido</button>
+              <button type="submit" class="btn btn-primary ms-2">Agregar al carrito</button>
           </div>
         </form>
       </div>
