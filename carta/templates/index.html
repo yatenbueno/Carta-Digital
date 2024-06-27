@@ -11,6 +11,13 @@ Carta-Digital
       {% for item in items %}
       <div class="col-md-3">
         {{ item.nombre }} - Precio: {{ item.precio }}
+        <form method="post" action="{% url 'actualizar_cantidad' item.id %}">
+          {% csrf_token %}
+          <div class="input-group">
+              <input type="number" name="cantidad" value="1" min="1" max="{{ item.cantidad_stock }}" class="form-control">
+              <button type="submit" class="btn btn-primary ms-2">Agregar al Carrito</button>
+          </div>
+        </form>
       </div>
       <div class="col-md-3">
         <img class="img-fluid" src="{{ item.foto.url }}" alt="Foto"/>
@@ -23,7 +30,7 @@ Carta-Digital
     <div class="">
       <nav>
         <ul class="pagination">
-          <!-- Estoy en una página del medio por lo cual puedo ir para atra -->
+          <!-- Estoy en una página del medio por lo cual puedo ir para atrás -->
           {% if items.has_previous %}
             <li class="page-item">
               <a class="page-link" href="?page=1">Primera</a>

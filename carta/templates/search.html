@@ -13,6 +13,13 @@ Carta-Digital
                 {% for item in filtro %}
                 <div class="col-md-3">
                     {{ item.nombre }} - Precio: {{ item.precio }}
+                    <form method="post" action="{% url 'actualizar_cantidad' item.id %}">
+                      {% csrf_token %}
+                      <div class="input-group">
+                          <input type="number" name="cantidad" value="1" min="1" max="{{ item.cantidad_stock }}" class="form-control">
+                          <button type="submit" class="btn btn-primary ms-2">Agregar al Carrito</button>
+                      </div>
+                    </form>
                 </div>
                 <div class="col-md-3">
                     <img class="img-fluid" src="{{ item.foto.url }}" alt="Foto"/>
@@ -43,7 +50,7 @@ Carta-Digital
                 </div>
             </div>
         {% else %}
-            <h2 style=color:white>No hay resultados para la palabra "{{ searched }}"</h2>
+            <h2 style="color:white;">No hay resultados para la palabra "{{ searched }}"</h2>
         {% endif %}
     {% else %}
         <h2 class="no_value">Tu búsqueda no contenía ningún valor</h2>
