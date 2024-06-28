@@ -4,7 +4,8 @@ from django.conf import settings
 from django.conf.urls.static import static
 from carta.views import BebidaView, BodegaView, CafeteriaView, MenuView, BaseView, SearchView
 from carta.views import PaginateBebidasView, PaginateBodegaView, PaginateCafeteriaView, PaginateMenusView, PaginateIndexView
-from carta.views.carro import VerPedidoView, EliminarDelPedidoView, ActualizarCantidadView, PagarPedidoView, AgregarAlPedidoView 
+from carta.views.carro import VerPedidoView, EliminarDelPedidoView, ActualizarCantidadView, PagarPedidoView, AgregarAlPedidoView
+from carta.views import detalle_pedido, historial_pedidos
 
 urlpatterns = [
     # URLS de la Carta
@@ -25,7 +26,10 @@ urlpatterns = [
     path('carro/', VerPedidoView.as_view(), name='ver-carro'),
     path('eliminar-del-pedido/<int:item_id>/', EliminarDelPedidoView.as_view(), name='eliminar_del_pedido'),
     path('actualizar-cantidad/<int:item_id>/', ActualizarCantidadView.as_view(), name='actualizar_cantidad'),
-    path('procesar-pago/', PagarPedidoView.as_view(), name= 'pagar_pedido')
+    path('procesar-pago/', PagarPedidoView.as_view(), name= 'pagar-pedido'),
+    # URLS DE HISTORIAL PEDIDO
+    path('historial_pedidos/', historial_pedidos, name='historial_pedidos'),
+    path('detalle_pedido/<int:pedido_id>/', detalle_pedido, name='detalle_pedido'),
     ]
 
 if settings.DEBUG:

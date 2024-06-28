@@ -53,27 +53,6 @@ from datetime import datetime
 class Pedido(models.Model):
     items = models.ManyToManyField(Item, blank=True, related_name="items", through='PedidoItem')
     monto_total = models.FloatField(null=False, default=0, verbose_name="Monto total")
-    fecha = models.DateTimeField(null=True, default=datetime.now)
-    cliente = models.ForeignKey(Cliente, null=True, on_delete=models.CASCADE)
-    
-    def calcular_monto(self):
-        monto_total = 0
-        for item in self.pedido_item.all():
-            monto_total += item.item.precio * item.cantidad_seleccionada
-        self.monto_total = monto_total
-        self.save(update_fields=['monto_total'])
-        return monto_total
-
-    # def save(self):
-    #     self.calcular_monto()
-    #     super.save()
-    
-    def __str__(self):
-        return f"Pedido {self.id}"
-
-class Pedido(models.Model):
-    items = models.ManyToManyField(Item, blank=True, related_name="items", through='PedidoItem')
-    monto_total = models.FloatField(null=False, default=0, verbose_name="Monto total")
     fecha = models.DateTimeField(null=True, auto_now_add=True)  # Definido con auto_now_add para establecer la fecha automáticamente al crear un pedido
     cliente = models.ForeignKey(Cliente, null=True, on_delete=models.CASCADE)
     completado= models.BooleanField(default=False, null=True)
@@ -112,27 +91,25 @@ class PedidoItem(models.Model):
     def __str__(self):
         return f"{self.cantidad_seleccionada} cantidad seleccionada de {self.item.nombre} en Pedido {self.pedido.id}"
 
-class HistorialPedido(models.Model):
-    cliente = models.ForeignKey(User, on_delete=models.CASCADE)
-    fecha_pedido = models.DateTimeField(auto_now_add=True)
-    monto_total = models.DecimalField(max_digits=10, decimal_places=2, default=0)
+# class HistorialPedido(models.Model):
+#     cliente = models.ForeignKey(User, on_delete=models.CASCADE)
+#     fecha_pedido = models.DateTimeField(auto_now_add=True)
+#     monto_total = models.DecimalField(max_digits=10, decimal_places=2, default=0)
 
-    def __str__(self):
-        return f'Historial Pedido {self.id} de {self.cliente}'
+#     def __str__(self):
+#         return f'Historial Pedido {self.id} de {self.cliente}'
 
-class HistorialPedidoItem(models.Model):
-    historial_pedido = models.ForeignKey(
-        HistorialPedido,
-        on_delete=models.CASCADE,
-        related_name='pedido_items'  # Cambia el related_name aquí
-    )
-    producto = models.ForeignKey(Item, on_delete=models.CASCADE)
-    cantidad = models.PositiveIntegerField()
-    precio = models.DecimalField(max_digits=10, decimal_places=2)
+# class HistorialPedidoItem(models.Model):
+#     historial_pedido = models.ForeignKey(HistorialPedido, on_delete=models.CASCADE, related_name='pedido_items'  # Cambia el related_name aquí
+#     )
+#     producto = models.ForeignKey(Item, on_delete=models.CASCADE)
+#     cantidad = models.PositiveIntegerField()
+#     precio = models.DecimalField(max_digits=10, decimal_places=2)
 
-    @property
-    def subtotal(self):
-        return self.cantidad * self.precio
+#     @property
+#     def subtotal(self):
+#         return self.cantidad * self.precio
+    
 class Reserva(models.Model):
     cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE)
     cantidad_personas = models.IntegerField(null=False, verbose_name="Cantidad de personas")

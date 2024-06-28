@@ -2270,7 +2270,7 @@ progress {
   --bs-table-hover-bg: rgba(0, 0, 0, 0.075);
   width: 100%;
   margin-bottom: 10px;
-  color: #999;
+  color: #000000;
   vertical-align: top;
   border-color: #dee2e6;
 }
@@ -14747,13 +14747,13 @@ ol, ul {
 }
 
 a {
-  color: #999;
+  color: #000000;
   text-decoration: none;
   transition: all 0.3s ease-in-out;
   outline: none;
 }
 a:hover {
-  color: #212529;
+  color: #00b4df !important;
 }
 
 input, textarea, button, a {

@@ -2,56 +2,66 @@ from django.contrib import messages
 from django.shortcuts import get_object_or_404, redirect
 from django.views import View
 from django.views.generic import TemplateView
-from carta.models import HistorialPedido, HistorialPedidoItem, Pedido, PedidoItem, Item, Cliente
+from django.contrib.auth.mixins import LoginRequiredMixin
+from carta.models import Pedido, PedidoItem, Item, Cliente
 
+class AgregarAlPedidoView(View, LoginRequiredMixin):
+    login_url = '/users/login/'  # URL de tu página de inicio de sesión
+    redirect_field_name = 'next'
 
-class AgregarAlPedidoView(View):
+    def dispatch(self, request, *args, **kwargs):
+        # Verificar si el usuario está autenticado
+        if not request.user.is_authenticated:
+            # Si no está autenticado, redirigir a la página de inicio de sesión
+            messages.warning(request, 'Inicie sesión para ver su carrito por favor')
+            return redirect(self.login_url + '?next=' + request.path)
+        return super().dispatch(request, *args, **kwargs)
+    
     def post(self, request, item_id):
         item = get_object_or_404(Item, id=item_id)
         cantidad = int(request.POST.get('cantidad', 1))
         cliente = self.get_or_create_cliente(request)
-
-        # Obtener o crear el pedido del cliente
-        carrito, _ = Pedido.objects.get_or_create(cliente=cliente)
-
+        # Obtener o crear el pedido del cliente que no esté completado
+        carrito, _ = Pedido.objects.get_or_create(cliente=cliente, completado=False)
         # Obtener o crear el PedidoItem para el Item seleccionado
         item_carrito, created = PedidoItem.objects.get_or_create(pedido=carrito, item=item)
-
         if not created:
             # Si el PedidoItem ya existe, aumentar la cantidad seleccionada
             item_carrito.cantidad_seleccionada += cantidad
         else:
             # Si es nuevo, establecer la cantidad seleccionada
             item_carrito.cantidad_seleccionada = cantidad
-        
         # Calcular el subtotal antes de guardar
         item_carrito.subtotal = item.precio * item_carrito.cantidad_seleccionada
         item_carrito.save()
-
         # Actualizar el monto total del pedido
         carrito.calcular_monto()
-
-        # Mensaje de éxito
         messages.success(request, f'{item.nombre} se ha agregado al carrito.')
 
         # Redirigir a la página anterior o a la lista de ítems
         return redirect(request.META.get('HTTP_REFERER', 'item-list'))
 
     def get_or_create_cliente(self, request):
-        if request.user.is_authenticated:
-            cliente, _ = Cliente.objects.get_or_create(user=request.user)
-        else:
-            # Aquí deberías ajustar según tu lógica para clientes no autenticados
-            cliente, _ = Cliente.objects.get_or_create(dni="00000000")
+        cliente, _ = Cliente.objects.get_or_create(user=request.user)
         return cliente
 
-class VerPedidoView(TemplateView):
+class VerPedidoView(TemplateView, LoginRequiredMixin):
     template_name = 'carro.html'
+    login_url = '/users/login/'  # URL de tu página de inicio de sesión
+    redirect_field_name = 'next'
 
+    def dispatch(self, request, *args, **kwargs):
+        # Verificar si el usuario está autenticado
+        if not request.user.is_authenticated:
+            # Si no está autenticado, redirigir a la página de inicio de sesión
+            messages.warning(request, 'Por favor, inicie sesión para ver su carrito')
+            return redirect(self.login_url + '?next=' + request.path)
+        return super().dispatch(request, *args, **kwargs)
+    
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         cliente = self.get_or_create_cliente(self.request)
-        carrito = Pedido.objects.filter(cliente=cliente).first()
+        carrito = Pedido.objects.filter(cliente=cliente, completado=False).first()
 
         if carrito:
             items_carrito = carrito.pedido_item.all()
@@ -66,10 +76,7 @@ class VerPedidoView(TemplateView):
         return context
 
     def get_or_create_cliente(self, request):
-        if request.user.is_authenticated:
-            cliente, _ = Cliente.objects.get_or_create(user=request.user)
-        else:
-            cliente, _ = Cliente.objects.get_or_create(dni="00000000")
+        cliente, _ = Cliente.objects.get_or_create(user=request.user)
         return cliente
 
 class EliminarDelPedidoView(View):
@@ -95,25 +102,16 @@ class ActualizarCantidadView(View):
 class PagarPedidoView(View):
     def post(self, request):
         # Supongamos que el cliente actual es el que está realizando la solicitud
-        cliente = request.user
+        cliente = self.get_or_create_cliente(self.request)
         # Obtiene el pedido actual del cliente
         pedido = get_object_or_404(Pedido, cliente=cliente, completado=False)
-        
-        # Copia los items del pedido actual al historial de pedidos
-        historial_pedido = HistorialPedido.objects.create(cliente=cliente)
-        for item in pedido.pedido_item.all():
-            historial_pedido.items.create(
-                item=item.item,
-                cantidad_seleccionada=item.cantidad_seleccionada,
-                pedido=historial_pedido
-            )
-
         # Marca el pedido como completado
         pedido.completado = True
         pedido.save()
-
-        # Mensaje de éxito
         messages.success(request, 'Pedido pagado y guardado en el historial correctamente.')
-
         # Redirige a la página principal
         return redirect('index')
+    
+    def get_or_create_cliente(self, request):
+        cliente, _ = Cliente.objects.get_or_create(user=request.user)
+        return cliente

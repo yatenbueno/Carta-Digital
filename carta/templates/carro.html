@@ -53,7 +53,7 @@
         </div>
         <div class="col-md-6">
             <div class="text-end">
-                <form method="post" action="{% url 'pagar_pedido' %}">
+                <form method="post" action="{% url 'pagar-pedido' %}">
                     {% csrf_token %}
                     <button type="submit" class="btn btn-primary">Confirmá tu pedido</button>
                 </form>
