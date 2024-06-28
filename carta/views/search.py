@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.core.paginator import Paginator
 from ..models import Item, Categoria
 
@@ -12,13 +12,16 @@ def SearchView(request):
     if categoria_id:
         filtro_items = filtro_items.filter(categoria_id=categoria_id)
 
-    paginator = Paginator(filtro_items, 8)  # 8 items per page
+    paginator = Paginator(filtro_items, 9)
     page = request.GET.get('page') or 1
     filtro = paginator.get_page(page)
     current_page = int(page)
     total_pages = range(1, filtro.paginator.num_pages + 1)
 
     categorias = Categoria.objects.all()
+    categoria_seleccionada = None
+    if categoria_id:
+        categoria_seleccionada = get_object_or_404(Categoria, id=categoria_id)
 
     return render(request, 'search.html', {
         'searched': searched,
@@ -26,5 +29,5 @@ def SearchView(request):
         'current_page': current_page,
         'total_pages': total_pages,
         'categorias': categorias,
-        'categoria_seleccionada': categoria_id
+        'categoria_seleccionada': categoria_seleccionada
     })

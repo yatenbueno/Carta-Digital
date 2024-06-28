@@ -4,7 +4,7 @@ from django.core.paginator import Paginator
 
 def PaginateIndexView(request):
    listado_items = Item.objects.all().order_by('nombre')
-   paginator = Paginator(listado_items, 8)
+   paginator = Paginator(listado_items, 9)
    pagina = request.GET.get("page") or 1
    items = paginator.get_page(pagina)
    pagina_actual = int(pagina)
@@ -15,7 +15,7 @@ def PaginateIndexView(request):
 
 def PaginateBebidasView(request):
    listado_bebidas = Item.objects.filter(categoria__nombre__iexact = "bebida")
-   paginator = Paginator(listado_bebidas, 8)
+   paginator = Paginator(listado_bebidas, 9)
    pagina = request.GET.get("page") or 1
    bebidas = paginator.get_page(pagina)
    pagina_actual = int(pagina)
@@ -26,7 +26,7 @@ def PaginateBebidasView(request):
 
 def PaginateBodegaView(request):
    listado_bodega = Item.objects.filter(categoria__nombre__iexact = "bodega")
-   paginator = Paginator(listado_bodega, 8)
+   paginator = Paginator(listado_bodega, 9)
    pagina = request.GET.get("page") or 1
    bodega = paginator.get_page(pagina)
    pagina_actual = int(pagina)
@@ -37,7 +37,7 @@ def PaginateBodegaView(request):
 
 def PaginateCafeteriaView(request):
    listado_cafeteria = Item.objects.filter(categoria__nombre__iexact = "cafeteria")
-   paginator = Paginator(listado_cafeteria, 8)
+   paginator = Paginator(listado_cafeteria, 9)
    pagina = request.GET.get("page") or 1
    cafeteria = paginator.get_page(pagina)
    pagina_actual = int(pagina)
@@ -48,7 +48,7 @@ def PaginateCafeteriaView(request):
 
 def PaginateMenusView(request):
    listado_menus = Item.objects.filter(categoria__nombre__iexact = "menu")
-   paginator = Paginator(listado_menus, 8)
+   paginator = Paginator(listado_menus, 9)
    pagina = request.GET.get("page") or 1
    menus = paginator.get_page(pagina)
    pagina_actual = int(pagina)

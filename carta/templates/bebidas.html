@@ -5,22 +5,26 @@ Bebidas
 {% endblock %}
 
 {% block content %}
-<h1>Bebidas Disponibles</h1>
+<h2 class="text-center">Bebidas Disponibles</h2>
 <div class="container text-center">
-    <div class="row">
-      {% for bebida in bebidas %}
-      <div class="col-md-3">
-        {{ bebida.nombre }} - Precio: {{ bebida.precio }}
-        <form method="post" action="{% url 'agregar-al-carrito' bebida.id %}">
-          {% csrf_token %}
-          <div class="input-group">
-              <input type="number" name="cantidad" value="0" min="1" max="{{ bebida.cantidad_stock }}" class="form-control">
-              <button type="submit" class="btn btn-primary ms-2">Agregar al carrito</button>
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+      {% for item in bebidas %}
+      <div class="col">
+        <div class="card h-100">
+          <img src="{{ item.foto.url }}" class="card-img-top" alt="Foto de {{ item.nombre }}">
+          <div class="card-body">
+            <h5 class="card-title">{{ item.nombre }}</h5>
+            <p class="card-text">Precio: {{ item.precio }}</p>
+            <p class="card-text">Cantidad en stock: {{ item.cantidad_stock }}</p>
+            <form method="post" action="{% url 'agregar-al-carrito' item.id %}">
+              {% csrf_token %}
+              <div class="input-group mb-3">
+                <input type="number" name="cantidad" value="0" min="1" max="{{ item.cantidad_stock }}" class="form-control">
+                <button type="submit" class="btn btn-primary ms-2">Agregar al carrito</button>
+              </div>
+            </form>
           </div>
-        </form>
-      </div>
-      <div class="col-md-3">
-        <img class="img-fluid" src="{{ bebida.foto.url }}" alt="Foto"/>
+        </div>
       </div>
       {% endfor %}
     </div>

@@ -4533,6 +4533,9 @@ textarea.form-control-lg {
 .card-img-top {
   border-top-left-radius: 3px;
   border-top-right-radius: 3px;
+  width: 60% !important;
+  height: 220px !important;
+  object-fit: cover !important;
 }
 
 .card-img,
@@ -6684,6 +6687,7 @@ textarea.form-control-lg {
 
 .h-100 {
   height: 100% !important;
+  align-items: center;
 }
 
 .h-auto {
