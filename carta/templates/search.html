@@ -5,7 +5,21 @@ Carta-Digital
 {% endblock %}
 
 {% block content %}
-    {% if searched %}
+    <h1>Buscar Items</h1>
+    <form method="GET" action="{% url 'search-view' %}" class="form-inline">
+        <div class="form-group mx-sm-3 mb-2">
+            <input type="text" name="searched" value="{{ searched }}" placeholder="Buscar..." class="form-control">
+        </div>
+        <div class="form-group mx-sm-3 mb-2">
+            <select name="categoria" class="form-control">
+                <option value="">Todas las categorías</option>
+                {% for categoria in categorias %}
+                <option value="{{ categoria.id }}" {% if categoria.id|stringformat:"s" == categoria_seleccionada|stringformat:"s" %}selected{% endif %}>{{ categoria.nombre }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary mb-2">Buscar</button>
+    </form>
         {% if filtro %}
             <h1>Items Disponibles</h1>
             <div class="container text-center">
@@ -40,19 +54,15 @@ Carta-Digital
                                     </li>
                                 {% else %}
                                     <li class="page-item">
-                                        <a class="page-link" href="?searched={{ searched }}&page={{ page_num }}">{{ page_num }}</a>
+                                        <a class="page-link" href="?searched={{ searched }}&categoria={{ categoria_seleccionada }}&page={{ page_num }}">{{ page_num }}</a>
                                     </li>
                                 {% endif %}
                             {% endfor %}
                         </ul>
                     </nav>
-                                        
                 </div>
             </div>
         {% else %}
             <h2 style="color:white;">No hay resultados para la palabra "{{ searched }}"</h2>
         {% endif %}
-    {% else %}
-        <h2 class="no_value">Tu búsqueda no contenía ningún valor</h2>
-    {% endif %}
 {% endblock %}

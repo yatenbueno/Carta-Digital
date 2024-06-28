@@ -14,7 +14,7 @@ Bebidas
         <form method="post" action="{% url 'agregar-al-carrito' bebida.id %}">
           {% csrf_token %}
           <div class="input-group">
-              <input type="number" name="cantidad" value="{{ bebida.cantidad_seleccionada }}" min="1" max="{{ bebida.cantidad_stock }}" class="form-control">
+              <input type="number" name="cantidad" value="0" min="0" max="{{ bebida.cantidad_stock }}" class="form-control">
               <button type="submit" class="btn btn-primary ms-2">Agregar al carrito</button>
           </div>
         </form>

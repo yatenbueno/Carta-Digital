@@ -13,7 +13,7 @@ class AgregarAlPedidoView(View, LoginRequiredMixin):
         # Verificar si el usuario está autenticado
         if not request.user.is_authenticated:
             # Si no está autenticado, redirigir a la página de inicio de sesión
-            messages.warning(request, 'Inicie sesión para ver su carrito por favor')
+            messages.warning(request, 'Por favor, inicie sesión para poder realizar un pedido')
             return redirect(self.login_url + '?next=' + request.path)
         return super().dispatch(request, *args, **kwargs)
     
