@@ -30,7 +30,7 @@ Carta-Digital
                     <form method="post" action="{% url 'actualizar_cantidad' item.id %}">
                       {% csrf_token %}
                       <div class="input-group">
-                          <input type="number" name="cantidad" value="0" min="0" max="{{ item.cantidad_stock }}" class="form-control">
+                          <input type="number" name="cantidad" value="0" min="1" max="{{ item.cantidad_stock }}" class="form-control">
                           <button type="submit" class="btn btn-primary ms-2">Agregar al Carrito</button>
                       </div>
                     </form>
