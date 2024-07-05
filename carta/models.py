@@ -49,7 +49,6 @@ class Cliente(models.Model):
         return f"{self.user.first_name}, {self.user.last_name}"
 
 
-from datetime import datetime
 class Pedido(models.Model):
     items = models.ManyToManyField(Item, blank=True, related_name="items", through='PedidoItem')
     monto_total = models.FloatField(null=False, default=0, verbose_name="Monto total")
@@ -63,8 +62,7 @@ class Pedido(models.Model):
             monto_total += item.item.precio * item.cantidad_seleccionada
         self.monto_total = monto_total
         self.save(update_fields=['monto_total'])
-        return monto_total  
-
+        return monto_total 
         
     def __str__(self):
         return f"Pedido {self.id}"

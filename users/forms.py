@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Group
 
 
 class LoginForm(forms.Form):
@@ -14,7 +14,10 @@ class RegistroForm(UserCreationForm):
     last_name = forms.CharField(required=True, widget=forms.TextInput(attrs={'class': 'form-control'}))
     dni = forms.CharField(max_length=8, required=True, widget=forms.TextInput(attrs={'class': 'form-control'}))
     fecha_nacimiento = forms.DateField(required=True, widget=forms.DateInput(attrs={'class': 'form-control', 'type': 'date'}))
-
+    
+    #agregado para elejir tipo de usuario
+    grupo = forms.ModelChoiceField(queryset=Group.objects.all(), required=True, widget=forms.Select(attrs={'class': 'form-control'}))
+    
     class Meta:
         model = User
         fields = ["username", "first_name", "last_name", "email", "password1", "password2", 'dni', 'fecha_nacimiento']
