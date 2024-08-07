@@ -1,5 +1,6 @@
 from django.contrib import messages
 from django.shortcuts import get_object_or_404, redirect
+from django.urls import reverse
 from django.views import View
 from django.views.generic import TemplateView
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -109,8 +110,8 @@ class PagarPedidoView(View):
         pedido.completado = True
         pedido.save()
         messages.success(request, 'Pedido pagado y guardado en el historial correctamente.')
-        # Redirige a la página principal
-        return redirect('index')
+        # Redirige a la página de confirmación del pedido
+        return redirect(reverse('confirmar-pedido', kwargs={'pedido_id': pedido.id}))
     
     def get_or_create_cliente(self, request):
         cliente, _ = Cliente.objects.get_or_create(user=request.user)

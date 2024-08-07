@@ -50,11 +50,18 @@ class Cliente(models.Model):
 
 
 class Pedido(models.Model):
+    Estados = [
+        ('preparacion', 'En preparacion'),
+        ('terminado', 'Terminado'),
+        ('cancelado','Cancelado'),
+        ('finalizado', 'Finalizado'),
+    ]
     items = models.ManyToManyField(Item, blank=True, related_name="items", through='PedidoItem')
     monto_total = models.FloatField(null=False, default=0, verbose_name="Monto total")
     fecha = models.DateTimeField(null=True, auto_now_add=True)  # Definido con auto_now_add para establecer la fecha automáticamente al crear un pedido
     cliente = models.ForeignKey(Cliente, null=True, on_delete=models.CASCADE)
     completado= models.BooleanField(default=False, null=True)
+    estado= models.CharField(max_length=12, choices= Estados, default= 'preparacion', verbose_name="Estado del Pedido")
 
     def calcular_monto(self):
         monto_total = 0
@@ -72,6 +79,9 @@ class PedidoItem(models.Model):
     item = models.ForeignKey(Item, on_delete=models.CASCADE)
     cantidad_seleccionada = models.IntegerField(null=False, default=1, verbose_name="Cantidad seleccionada")
     subtotal = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True, verbose_name="Subtotal")
+    veggie = models.BooleanField(default=False)
+    gluten_free = models.BooleanField(default=False)
+    tradicional = models.BooleanField(default=False)
     
     def calcular_subtotal(self):
         self.subtotal = self.item.precio * self.cantidad_seleccionada

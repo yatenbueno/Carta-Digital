@@ -27,3 +27,16 @@ class RegistroForm(UserCreationForm):
         self.fields['username'].widget.attrs['class'] = 'form-control'
         self.fields['password1'].widget.attrs['class'] = 'form-control'
         self.fields['password2'].widget.attrs['class'] = 'form-control'
+
+       #si contraseña finaliza con tuti puede ser admin de mostrador sino pasa a ser cliente comun
+    def clean(self):
+        cleaned_data = super().clean()
+        password1 = cleaned_data.get("password1")
+        grupo = cleaned_data.get("grupo")
+        
+       # Verificar que la contraseña termina con 'tuti' si el grupo es 'Cocina'
+        if grupo and grupo.name == 'Cocina' and password1 and not password1.endswith('tuti'):
+            # Agregar un error no relacionado con el campo del formulario
+            self.add_error(None, 'contraseña inválida, cambia a Usuario "Clietes"')
+        
+        return cleaned_data  

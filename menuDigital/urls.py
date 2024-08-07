@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.urls import include, path
 from django.conf import settings 
 from django.conf.urls.static import static
-from carta.views import BebidaView, BodegaView, CafeteriaView, MenuView, BaseView, SearchView
+from carta.views import BebidaView, BodegaView, CafeteriaView, MenuView, BaseView, SearchView, confirmarPedido
 from carta.views import PaginateBebidasView, PaginateBodegaView, PaginateCafeteriaView, PaginateMenusView, PaginateIndexView
 from carta.views.carro import VerPedidoView, EliminarDelPedidoView, ActualizarCantidadView, PagarPedidoView, AgregarAlPedidoView
 from carta.views import detalle_pedido, historial_pedidos
@@ -30,6 +30,7 @@ urlpatterns = [
     # URLS DE HISTORIAL PEDIDO
     path('historial_pedidos/', historial_pedidos, name='historial_pedidos'),
     path('detalle_pedido/<int:pedido_id>/', detalle_pedido, name='detalle_pedido'),
+    path('confirmar-pedido/<int:pedido_id>/', confirmarPedido.ConfirmarPedidoView.as_view(), name='confirmar-pedido')
     ]
 
 if settings.DEBUG:
