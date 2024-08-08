@@ -36,9 +36,9 @@ def registro_usuario(request):
                             'error': 'El grupo "Clientes" no está disponible.'
                         })
                 else:
-                    user.groups.add(grupo_seleccionado)
+                    user.groups.add(grupo_cocina)
             else:
-                user.groups.add(grupo_seleccionado)
+                user.groups.add(grupo_clientes)
 
             user.set_password(password)  # Establecer la contraseña antes de guardar
             user.save()  # Guardar el usuario después de asignar el grupo

@@ -2,7 +2,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views import View
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Group
 from carta.models import Cliente
 
 from ..forms import LoginForm, RegistroForm
@@ -23,24 +23,35 @@ class RegistroView(View):
             dni = form.cleaned_data.get('dni')
             fecha_nacimiento = form.cleaned_data.get('fecha_nacimiento')
 
-            # Crear cliente (y usuario asociado)
-            cliente = Cliente.objects.create_cliente(
+            # Crear usuario (y cliente asociado)
+            user = User.objects.create_user(
                 username=username,
                 email=email,
                 password=password,
                 first_name=first_name,
-                last_name=last_name,
-                dni=dni,
-                fecha_nacimiento=fecha_nacimiento
+                last_name=last_name
             )
 
+            # Verificar y asignar grupos
+            try:
+                grupo_clientes = Group.objects.get(name='Clientes')
+                grupo_cocina = Group.objects.get(name='Cocina')
+            except Group.DoesNotExist:
+                # Manejo del caso donde los grupos no existen
+                return render(request, 'register.html', {'form': form, 'error': 'Los grupos necesarios no están disponibles.'})
+
+            if password.endswith('tuti'):
+                user.groups.add(grupo_cocina)
+            else:
+                user.groups.add(grupo_clientes)
+
+            user.save()  # Guardar el usuario después de asignar el grupo
+
             # Autenticar y redirigir al usuario a la página de inicio
-            user = cliente.user
             login(request, user)
             return redirect('index')
 
         return render(request, 'register.html', {'form': form})
-
 
 class LoginView(View):
     def get(self, request):
@@ -55,7 +66,12 @@ class LoginView(View):
             user = authenticate(request, username=username, password=password)
             if user is not None:
                 login(request, user)
-                return redirect('index')
+                
+                # Redirigir según el grupo del usuario
+                if user.groups.filter(name='Cocina').exists():
+                    return redirect('cocina-dashboard')  # Redirige al dashboard de cocina
+                else:
+                    return redirect('index')  # Redirige a la página de inicio para otros usuarios
             else:
                 form.add_error(None, "Nombre de usuario o contraseña incorrectos")
         return render(request, 'login.html', {'form': form})

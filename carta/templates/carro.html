@@ -13,7 +13,6 @@
                     <th>Nombre</th>
                     <th>Precio</th>
                     <th>Cantidad</th>
-                    <th>Opciones</th>
                     <th>Subtotal</th>
                     <th>Acciones</th>
                 </tr>
@@ -33,9 +32,6 @@
                             </div>
                         </form>
                     </td>
-                    <td>
-                        <!-- Formulario de opciones eliminado -->
-                    </td>
                     <td>${{ item.subtotal }}</td>
                     <td>
                         <form method="post" action="{% url 'eliminar_del_pedido' item.id %}">
@@ -49,20 +45,27 @@
         </table>
     </div>
 
+    <!-- Sección de anotaciones y total -->
     <div class="row mt-4">
         <div class="col-md-6">
-            <div class="total-carrito">
-                <p class="fw-bold text-center">Total: ${{ total_carrito }}</p>
-            </div>
+            <form method="post" action="{% url 'ver-carro' %}">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label for="anotacion" class="form-label">Anotaciones para la cocina:</label>
+                    <textarea name="anotacion" id="anotacion" rows="3" class="form-control">{{ carrito.anotacion_cliente }}</textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Guardar Anotaciones</button>
+            </form>
         </div>
-        <div class="col-md-6">
-            <div class="text-end">
-                <form method="post" action="{% url 'pagar-pedido' %}">
-                    {% csrf_token %}
-                    <button type="submit" class="btn btn-primary">Confirmá tu pedido</button>
-                </form>
-                <a href="{% url 'index' %}" class="btn btn-secondary mt-2 d-block">Seguir Comprando</a>
+        <div class="col-md-6 text-end">
+            <div class="total-carrito">
+                <p class="fw-bold">Total: ${{ total_carrito }}</p>
             </div>
+            <form method="post" action="{% url 'pagar-pedido' %}">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-primary">Confirmá tu pedido</button>
+            </form>
+            <a href="{% url 'index' %}" class="btn btn-secondary mt-2 d-block">Seguir Comprando</a>
         </div>
     </div>
 

@@ -26,4 +26,7 @@ class ConfirmarPedidoView(TemplateView, LoginRequiredMixin):
         context['pedido'] = pedido
         context['items_pedido'] = items_pedido
         context['total_pedido'] = total_pedido
+        context['anotacion_cliente'] = pedido.anotacion_cliente
+
+        
         return context

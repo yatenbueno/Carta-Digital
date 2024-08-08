@@ -56,6 +56,7 @@ class Pedido(models.Model):
         ('cancelado','Cancelado'),
         ('finalizado', 'Finalizado'),
     ]
+    anotacion_cliente = models.TextField(blank= True, null= True)
     items = models.ManyToManyField(Item, blank=True, related_name="items", through='PedidoItem')
     monto_total = models.FloatField(null=False, default=0, verbose_name="Monto total")
     fecha = models.DateTimeField(null=True, auto_now_add=True)  # Definido con auto_now_add para establecer la fecha automáticamente al crear un pedido
@@ -71,8 +72,12 @@ class Pedido(models.Model):
         self.save(update_fields=['monto_total'])
         return monto_total 
         
+   
+    def get_estado_display(self):
+        return dict(self.Estados).get(self.estado, 'Desconocido')
+
     def __str__(self):
-        return f"Pedido {self.id}"
+        return f'Pedido {self.id} - {self.get_estado_display()}'
 
 class PedidoItem(models.Model):
     pedido = models.ForeignKey(Pedido, on_delete=models.CASCADE, related_name="pedido_item")
@@ -82,7 +87,7 @@ class PedidoItem(models.Model):
     veggie = models.BooleanField(default=False)
     gluten_free = models.BooleanField(default=False)
     tradicional = models.BooleanField(default=False)
-    
+
     def calcular_subtotal(self):
         self.subtotal = self.item.precio * self.cantidad_seleccionada
     

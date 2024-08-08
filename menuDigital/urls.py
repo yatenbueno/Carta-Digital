@@ -6,6 +6,7 @@ from carta.views import BebidaView, BodegaView, CafeteriaView, MenuView, BaseVie
 from carta.views import PaginateBebidasView, PaginateBodegaView, PaginateCafeteriaView, PaginateMenusView, PaginateIndexView
 from carta.views.carro import VerPedidoView, EliminarDelPedidoView, ActualizarCantidadView, PagarPedidoView, AgregarAlPedidoView
 from carta.views import detalle_pedido, historial_pedidos
+from users.views.cocina import CocinaView 
 
 urlpatterns = [
     # URLS de la Carta
@@ -16,22 +17,25 @@ urlpatterns = [
     path('bodega/', PaginateBodegaView),
     path('menus/', PaginateMenusView),
     path('search/', SearchView, name="search-view"),
+    
     # URLS DE LOGIN
     path('users/', include('users.urls')),
 
-    #CARRITO
-     #carrito de compras para pedidos 
-    #path('productos/', ListaProductosDisponibles.as_view(), name='lista-productos'),
+    # CARRITO
     path('agregar-al-pedido/<int:item_id>/', AgregarAlPedidoView.as_view(), name='agregar-al-carrito'),
     path('carro/', VerPedidoView.as_view(), name='ver-carro'),
     path('eliminar-del-pedido/<int:item_id>/', EliminarDelPedidoView.as_view(), name='eliminar_del_pedido'),
     path('actualizar-cantidad/<int:item_id>/', ActualizarCantidadView.as_view(), name='actualizar_cantidad'),
-    path('procesar-pago/', PagarPedidoView.as_view(), name= 'pagar-pedido'),
+    path('procesar-pago/', PagarPedidoView.as_view(), name='pagar-pedido'),
+    
     # URLS DE HISTORIAL PEDIDO
     path('historial_pedidos/', historial_pedidos, name='historial_pedidos'),
     path('detalle_pedido/<int:pedido_id>/', detalle_pedido, name='detalle_pedido'),
-    path('confirmar-pedido/<int:pedido_id>/', confirmarPedido.ConfirmarPedidoView.as_view(), name='confirmar-pedido')
-    ]
+    path('confirmar-pedido/<int:pedido_id>/', confirmarPedido.ConfirmarPedidoView.as_view(), name='confirmar-pedido'),
+    
+    # URL para Cocina
+    path('cocina-dashboard/', CocinaView.as_view(), name='cocina-dashboard'),
+]
 
 if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

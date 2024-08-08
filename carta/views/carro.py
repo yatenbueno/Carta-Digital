@@ -5,6 +5,8 @@ from django.views import View
 from django.views.generic import TemplateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from carta.models import Pedido, PedidoItem, Item, Cliente
+from django.views.generic.edit import UpdateView
+
 
 class AgregarAlPedidoView(View, LoginRequiredMixin):
     login_url = '/users/login/'  # URL de tu página de inicio de sesión
@@ -22,6 +24,7 @@ class AgregarAlPedidoView(View, LoginRequiredMixin):
         item = get_object_or_404(Item, id=item_id)
         cantidad = int(request.POST.get('cantidad', 1))
         cliente = self.get_or_create_cliente(request)
+        anotacion = request.POST.get('anotacion', '')
         # Obtener o crear el pedido del cliente que no esté completado
         carrito, _ = Pedido.objects.get_or_create(cliente=cliente, completado=False)
         # Obtener o crear el PedidoItem para el Item seleccionado
@@ -58,6 +61,19 @@ class VerPedidoView(TemplateView, LoginRequiredMixin):
             messages.warning(request, 'Por favor, inicie sesión para ver su carrito')
             return redirect(self.login_url + '?next=' + request.path)
         return super().dispatch(request, *args, **kwargs)
+    
+    def post(self, request, *args, **kwargs):
+        # Manejar la anotación enviada desde el formulario
+        cliente = self.get_or_create_cliente(request)
+        carrito = Pedido.objects.filter(cliente=cliente, completado=False).first()
+
+        if carrito:
+            anotacion = request.POST.get('anotacion')
+            carrito.anotacion_cliente = anotacion
+            carrito.save()
+            messages.success(request, 'Anotación guardada exitosamente.')
+
+        return redirect('ver-carro')
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -101,18 +117,38 @@ class ActualizarCantidadView(View):
 
 
 class PagarPedidoView(View):
+    
     def post(self, request):
         # Supongamos que el cliente actual es el que está realizando la solicitud
         cliente = self.get_or_create_cliente(self.request)
-        # Obtiene el pedido actual del cliente
         pedido = get_object_or_404(Pedido, cliente=cliente, completado=False)
-        # Marca el pedido como completado
         pedido.completado = True
+        pedido.estado = 'preparacion'
         pedido.save()
-        messages.success(request, 'Pedido pagado y guardado en el historial correctamente.')
+        messages.success(request, 'Pedido confirmado, guardado en el historial.')
         # Redirige a la página de confirmación del pedido
         return redirect(reverse('confirmar-pedido', kwargs={'pedido_id': pedido.id}))
     
     def get_or_create_cliente(self, request):
         cliente, _ = Cliente.objects.get_or_create(user=request.user)
         return cliente
+
+class CambiarEstadoPedidoView(LoginRequiredMixin, UpdateView):
+    model = Pedido
+    fields = ['estado']
+    template_name = 'cambiar_estado_pedido.html'
+    login_url = '/users/login/'  # URL de tu página de inicio de sesión
+
+    def get_object(self, queryset=None):
+        obj = get_object_or_404(Pedido, id=self.kwargs['pedido_id'])
+        if not self.request.user.groups.filter(name='Cocina').exists():
+            messages.warning(self.request, 'No tienes permiso para realizar esta acción.')
+            return redirect(self.login_url)
+        return obj
+
+    def form_valid(self, form):
+        messages.success(self.request, 'Estado del pedido actualizado exitosamente.')
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        return reverse('lista-pedidos')    

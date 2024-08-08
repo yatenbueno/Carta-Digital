@@ -1,58 +1,58 @@
-{% extends "base.html" %}
+{% extends 'base.html' %}
 
 {% block content %}
-<div class="container mt-5">
-    <h1 class="text-center mb-4">Detalles del Pedido</h1>
+<div class="container mt-4">
+    <h3 class="text-center bg-green mb-4">Pedido Confirmado</h3>
 
-    <div class="row mb-4">
-        <div class="col-md-6 offset-md-3">
-            <div class="card">
-                <div class="card-header">
-                    <h4>Pedido #{{ pedido.id }}</h4>
-                </div>
-                <div class="card-body">
-                    <h5>Cliente: {{ pedido.cliente.user.get_full_name }}</h5>
-                    <p>Email: {{ pedido.cliente.user.email }}</p>
-                    <p>Fecha del Pedido: {{ pedido.fecha }}</p>
-                    <p>Estado del Pedido: {{ pedido.get_estado_display }}</p>
-                    
-                    <h5 class="mt-4">Items del Pedido:</h5>
-                    <ul class="list-group">
-                        {% for item in items_pedido %}
-                            <li class="list-group-item">
-                                <div class="d-flex justify-content-between">
-                                    <div>
-                                        <h6>{{ item.item.nombre }}</h6>
-                                        <p>Precio: ${{ item.item.precio }}</p>
-                                    </div>
-                                    <div>
-                                        <p>Cantidad: {{ item.cantidad_seleccionada }}</p>
-                                        <p>Total: ${{ item.subtotal }}</p>
-                                    </div>
-                                </div>
-                            </li>
-                        {% endfor %}
-                    </ul>
-                    
-                    <h5 class="mt-4">Total del Pedido: ${{ total_pedido }}</h5>
-                </div>
-            </div>
+
+
+    <div class="card mb-4">
+        <div class="card-body">
+            <h4 class="card-title mb-3">Detalles del Pedido</h4>
+            <p><strong>Nombre del Cliente:</strong> {{ pedido.cliente.user.get_full_name }}</p>
+            <p><strong>Fecha del Pedido:</strong> {{ pedido.fecha|date:"d/m/Y H:i" }}</p>
+
+            <p><strong>Total:</strong> ${{ total_pedido }}</p>
+            <p><strong>Estado del Pedido:</strong> 
+                <span class="badge 
+                    {% if pedido.estado == 'preparacion' %}bg-warning
+                    {% elif pedido.estado == 'terminado' %}bg-success
+                    {% elif pedido.estado == 'cancelado' %}bg-danger
+                    {% elif pedido.estado == 'finalizado' %}bg-primary
+                    {% else %}bg-secondary
+                    {% endif %} 
+                ">
+                    {{ pedido.get_estado_display }}
+                </span>
+            </p>
         </div>
     </div>
 
-    {% if pedido.direccion_envio %}
-    <div class="row mt-4">
-        <div class="col-md-6 offset-md-3">
-            <div class="card">
-                <div class="card-header">
-                    <h4>Dirección de Envío</h4>
-                </div>
-                <div class="card-body">
-                    <p>{{ pedido.direccion_envio }}</p>
-                </div>
-            </div>
+    <div class="card mb-4">
+        <div class="card-body">
+            <h5 class="card-title mb-3">Items del Pedido</h5>
+            <ul class="list-group">
+                {% for item in items_pedido %}
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <div>
+                        <strong>{{ item.item.nombre }}</strong> (x{{ item.cantidad_seleccionada }})
+                    </div>
+                    <span class="badge bg-primary rounded-pill">${{ item.subtotal }}</span>
+                </li>
+                {% endfor %}
+            </ul>
         </div>
     </div>
-    {% endif %}
+
+    <div class="card mb-4">
+        <div class="card-body">
+            <h5 class="card-title">Anotaciones del Cliente</h5>
+            <p>{{ pedido.anotacion_cliente|default:"No hay anotaciones" }}</p>
+        </div>
+    </div>
+
+    <div class="text-end mt-4">
+        <a href="{% url 'index' %}" class="btn btn-secondary">Volver al Inicio</a>
+    </div>
 </div>
 {% endblock %}
