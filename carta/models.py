@@ -51,10 +51,15 @@ class Cliente(models.Model):
 
 class Pedido(models.Model):
     Estados = [
-        ('preparacion', 'En preparacion'),
-        ('terminado', 'Terminado'),
-        ('cancelado','Cancelado'),
+         # ('valor_interno', 'Etiqueta visible')
+        ('confirmado', 'confirmado'),
+        ('pendiente', 'pendiente de confirmacion'),
+        ('preparacion', 'En preparación'),
+        ('listo_para_entregar', 'Listo para entregar'),
+        ('entregado', 'entregado'),
         ('finalizado', 'Finalizado'),
+        ('cancelado', 'Cancelado'),
+        
     ]
     anotacion_cliente = models.TextField(blank= True, null= True)
     items = models.ManyToManyField(Item, blank=True, related_name="items", through='PedidoItem')
@@ -62,7 +67,7 @@ class Pedido(models.Model):
     fecha = models.DateTimeField(null=True, auto_now_add=True)  # Definido con auto_now_add para establecer la fecha automáticamente al crear un pedido
     cliente = models.ForeignKey(Cliente, null=True, on_delete=models.CASCADE)
     completado= models.BooleanField(default=False, null=True)
-    estado= models.CharField(max_length=12, choices= Estados, default= 'preparacion', verbose_name="Estado del Pedido")
+    estado= models.CharField(max_length=25, choices= Estados, default= 'confirmado', verbose_name="Estado del Pedido")
 
     def calcular_monto(self):
         monto_total = 0
@@ -84,9 +89,7 @@ class PedidoItem(models.Model):
     item = models.ForeignKey(Item, on_delete=models.CASCADE)
     cantidad_seleccionada = models.IntegerField(null=False, default=1, verbose_name="Cantidad seleccionada")
     subtotal = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True, verbose_name="Subtotal")
-    veggie = models.BooleanField(default=False)
-    gluten_free = models.BooleanField(default=False)
-    tradicional = models.BooleanField(default=False)
+   
 
     def calcular_subtotal(self):
         self.subtotal = self.item.precio * self.cantidad_seleccionada
@@ -104,31 +107,4 @@ class PedidoItem(models.Model):
     def __str__(self):
         return f"{self.cantidad_seleccionada} cantidad seleccionada de {self.item.nombre} en Pedido {self.pedido.id}"
 
-# class HistorialPedido(models.Model):
-#     cliente = models.ForeignKey(User, on_delete=models.CASCADE)
-#     fecha_pedido = models.DateTimeField(auto_now_add=True)
-#     monto_total = models.DecimalField(max_digits=10, decimal_places=2, default=0)
 
-#     def __str__(self):
-#         return f'Historial Pedido {self.id} de {self.cliente}'
-
-# class HistorialPedidoItem(models.Model):
-#     historial_pedido = models.ForeignKey(HistorialPedido, on_delete=models.CASCADE, related_name='pedido_items'  # Cambia el related_name aquí
-#     )
-#     producto = models.ForeignKey(Item, on_delete=models.CASCADE)
-#     cantidad = models.PositiveIntegerField()
-#     precio = models.DecimalField(max_digits=10, decimal_places=2)
-
-#     @property
-#     def subtotal(self):
-#         return self.cantidad * self.precio
-    
-class Reserva(models.Model):
-    cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE)
-    cantidad_personas = models.IntegerField(null=False, verbose_name="Cantidad de personas")
-    fecha_hora = models.DateTimeField(null=False, verbose_name="Fecha y hora")
-
-class Descuento(models.Model):
-    cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE)
-    porcentaje = models.FloatField(null=True)
-# Create your models here.

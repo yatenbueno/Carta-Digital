@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Item, Categoria, Cliente, Pedido, Reserva, Descuento, PedidoItem
+from .models import Item, Categoria, Cliente, Pedido, PedidoItem
 from django.utils.safestring import mark_safe
 from django.utils.html import format_html
 
@@ -7,8 +7,7 @@ from django.utils.html import format_html
 admin.site.register(Categoria)
 admin.site.register(Cliente)
 admin.site.register(Pedido)
-admin.site.register(Reserva)
-admin.site.register(Descuento)
+
 admin.site.register(PedidoItem)
 # Register your models here.
 

@@ -1,6 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User, Group
+from carta.models import Pedido
 
 
 class LoginForm(forms.Form):
@@ -40,3 +41,11 @@ class RegistroForm(UserCreationForm):
             self.add_error(None, 'contraseña inválida, cambia a Usuario "Clietes"')
         
         return cleaned_data  
+
+class CambioEstadoForm(forms.ModelForm):
+    class Meta:
+        model = Pedido
+        fields = ['estado']
+        widgets = {
+            'estado': forms.Select(attrs={'class': 'form-control'})
+        }

@@ -1,10 +1,8 @@
 from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render, redirect
-from django.urls import reverse_lazy
 from django.views import View
 from django.contrib.auth.models import User, Group
 from carta.models import Cliente
-
 from ..forms import LoginForm, RegistroForm
 
 class RegistroView(View):
@@ -23,7 +21,7 @@ class RegistroView(View):
             dni = form.cleaned_data.get('dni')
             fecha_nacimiento = form.cleaned_data.get('fecha_nacimiento')
 
-            # Crear usuario (y cliente asociado)
+            # Crear usuario
             user = User.objects.create_user(
                 username=username,
                 email=email,
@@ -37,7 +35,6 @@ class RegistroView(View):
                 grupo_clientes = Group.objects.get(name='Clientes')
                 grupo_cocina = Group.objects.get(name='Cocina')
             except Group.DoesNotExist:
-                # Manejo del caso donde los grupos no existen
                 return render(request, 'register.html', {'form': form, 'error': 'Los grupos necesarios no están disponibles.'})
 
             if password.endswith('tuti'):
@@ -47,10 +44,20 @@ class RegistroView(View):
 
             user.save()  # Guardar el usuario después de asignar el grupo
 
+            # Crear cliente asociado
+            Cliente.objects.create(
+                user=user,
+                dni=dni,
+                fecha_nacimiento=fecha_nacimiento
+            )
+
             # Autenticar y redirigir al usuario a la página de inicio
             login(request, user)
-            return redirect('index')
-
+            if user.groups.filter(name='Cocina').exists():
+                return redirect('cocina-dashboard')
+            else:
+                return redirect('index')
+            
         return render(request, 'register.html', {'form': form})
 
 class LoginView(View):
@@ -63,6 +70,8 @@ class LoginView(View):
         if form.is_valid():
             username = form.cleaned_data.get('username')
             password = form.cleaned_data.get('password')
+
+            
             user = authenticate(request, username=username, password=password)
             if user is not None:
                 login(request, user)
@@ -75,7 +84,6 @@ class LoginView(View):
             else:
                 form.add_error(None, "Nombre de usuario o contraseña incorrectos")
         return render(request, 'login.html', {'form': form})
-
 
 def logout_view(request):
     logout(request)

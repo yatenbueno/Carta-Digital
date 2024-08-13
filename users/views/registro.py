@@ -10,22 +10,19 @@ def registro_usuario(request):
             user = form.save(commit=False)
             password = form.cleaned_data['password1']
             grupo_seleccionado = form.cleaned_data['grupo']
-            
+
             # Verificar si los grupos existen
             try:
                 grupo_clientes = Group.objects.get(name='Clientes')
-                print("Grupo 'Clientes' encontrado.")
             except Group.DoesNotExist:
                 grupo_clientes = None
-                print("Grupo 'Clientes' no encontrado.")
                 
             try:
                 grupo_cocina = Group.objects.get(name='Cocina')
-                print("Grupo 'Cocina' encontrado.")
             except Group.DoesNotExist:
                 grupo_cocina = None
-                print("Grupo 'Cocina' no encontrado.")
             
+            # Asignar grupos en función de la selección y contraseña
             if grupo_seleccionado == grupo_cocina:
                 if not password.endswith('tuti'):
                     if grupo_clientes:
@@ -38,7 +35,13 @@ def registro_usuario(request):
                 else:
                     user.groups.add(grupo_cocina)
             else:
-                user.groups.add(grupo_clientes)
+                if grupo_clientes:
+                    user.groups.add(grupo_clientes)
+                else:
+                    return render(request, 'registro_usuario.html', {
+                        'form': form,
+                        'error': 'El grupo "Clientes" no está disponible.'
+                    })
 
             user.set_password(password)  # Establecer la contraseña antes de guardar
             user.save()  # Guardar el usuario después de asignar el grupo

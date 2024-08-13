@@ -7,6 +7,8 @@ from carta.views import PaginateBebidasView, PaginateBodegaView, PaginateCafeter
 from carta.views.carro import VerPedidoView, EliminarDelPedidoView, ActualizarCantidadView, PagarPedidoView, AgregarAlPedidoView
 from carta.views import detalle_pedido, historial_pedidos
 from users.views.cocina import CocinaView 
+from carta.views.pedidosPendientes import PedidosPendientesView 
+from carta.views.pedidoCliente import PedidoDetalleView
 
 urlpatterns = [
     # URLS de la Carta
@@ -32,7 +34,9 @@ urlpatterns = [
     path('historial_pedidos/', historial_pedidos, name='historial_pedidos'),
     path('detalle_pedido/<int:pedido_id>/', detalle_pedido, name='detalle_pedido'),
     path('confirmar-pedido/<int:pedido_id>/', confirmarPedido.ConfirmarPedidoView.as_view(), name='confirmar-pedido'),
-    
+    #pedidos pendientes
+    path('pedidos-pendientes/<int:cliente_id>/', PedidosPendientesView.as_view(), name='pedidos-pendientes'),
+    path('pedido/<int:pk>/', PedidoDetalleView.as_view(), name='pedido-detalle'),
     # URL para Cocina
     path('cocina-dashboard/', CocinaView.as_view(), name='cocina-dashboard'),
 ]

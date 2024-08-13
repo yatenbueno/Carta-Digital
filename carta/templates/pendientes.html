@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pedidos Pendientes</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-dark text-white">
+    <div class="container mt-5">
+        <h1 class="mb-4">Pedidos Pendientes de {{ cliente.user.username }}</h1>
+
+        {% if pedidos %}
+            <ul class="list-group">
+                {% for pedido in pedidos %}
+                    <li class="list-group-item bg-dark text-white">
+                        <h5>Pedido ID: {{ pedido.id }}</h5>
+                        <p>Fecha: {{ pedido.fecha }}</p>
+                        <p>Estado: {{ pedido.get_estado_display }}</p>
+                        <p>Monto Total: ${{ pedido.monto_total }}</p>
+                        <h6>Items:</h6>
+                        <ul>
+                            {% for item in pedido.items.all %}
+                                <li>{{ item.nombre }} (Cantidad: {{ item.pedidoitem.cantidad }})</li>
+                            {% endfor %}
+                        </ul>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No hay pedidos pendientes para este cliente.</p>
+        {% endif %}
+
+        <a href="{% url 'cocina-dashboard' %}" class="btn btn-light mt-4">Volver al Panel de Cocina</a>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

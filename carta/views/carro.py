@@ -7,15 +7,12 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from carta.models import Pedido, PedidoItem, Item, Cliente
 from django.views.generic.edit import UpdateView
 
-
-class AgregarAlPedidoView(View, LoginRequiredMixin):
-    login_url = '/users/login/'  # URL de tu página de inicio de sesión
+class AgregarAlPedidoView(LoginRequiredMixin, View):
+    login_url = '/users/login/'
     redirect_field_name = 'next'
 
     def dispatch(self, request, *args, **kwargs):
-        # Verificar si el usuario está autenticado
         if not request.user.is_authenticated:
-            # Si no está autenticado, redirigir a la página de inicio de sesión
             messages.warning(request, 'Por favor, inicie sesión para poder realizar un pedido')
             return redirect(self.login_url + '?next=' + request.path)
         return super().dispatch(request, *args, **kwargs)
@@ -23,23 +20,31 @@ class AgregarAlPedidoView(View, LoginRequiredMixin):
     def post(self, request, item_id):
         item = get_object_or_404(Item, id=item_id)
         cantidad = int(request.POST.get('cantidad', 1))
+        
         cliente = self.get_or_create_cliente(request)
         anotacion = request.POST.get('anotacion', '')
+
         # Obtener o crear el pedido del cliente que no esté completado
-        carrito, _ = Pedido.objects.get_or_create(cliente=cliente, completado=False)
+        carrito, _ = Pedido.objects.get_or_create(cliente=cliente, completado=False, defaults={'estado': 'pendiente'})
+
         # Obtener o crear el PedidoItem para el Item seleccionado
         item_carrito, created = PedidoItem.objects.get_or_create(pedido=carrito, item=item)
         if not created:
-            # Si el PedidoItem ya existe, aumentar la cantidad seleccionada
             item_carrito.cantidad_seleccionada += cantidad
         else:
-            # Si es nuevo, establecer la cantidad seleccionada
             item_carrito.cantidad_seleccionada = cantidad
-        # Calcular el subtotal antes de guardar
+        
         item_carrito.subtotal = item.precio * item_carrito.cantidad_seleccionada
         item_carrito.save()
+
         # Actualizar el monto total del pedido
         carrito.calcular_monto()
+
+        # Revisa el nombre del related_name, aquí se asume que es 'pedido_item'
+        # Si no es correcto, ajusta el nombre a lo que esté en el modelo PedidoItem
+        if not carrito.pedido_item.exists():
+            carrito.delete()
+
         messages.success(request, f'{item.nombre} se ha agregado al carrito.')
 
         # Redirigir a la página anterior o a la lista de ítems
@@ -48,6 +53,9 @@ class AgregarAlPedidoView(View, LoginRequiredMixin):
     def get_or_create_cliente(self, request):
         cliente, _ = Cliente.objects.get_or_create(user=request.user)
         return cliente
+
+
+
 
 class VerPedidoView(TemplateView, LoginRequiredMixin):
     template_name = 'carro.html'
@@ -95,14 +103,23 @@ class VerPedidoView(TemplateView, LoginRequiredMixin):
     def get_or_create_cliente(self, request):
         cliente, _ = Cliente.objects.get_or_create(user=request.user)
         return cliente
-
+    
 class EliminarDelPedidoView(View):
     def post(self, request, item_id):
         item_carrito = get_object_or_404(PedidoItem, id=item_id)
+        pedido = item_carrito.pedido  # Obtener el pedido asociado
+
         item_carrito.delete()
-        messages.success(request, f'El artículo {item_carrito.item.nombre} ha sido eliminado del carrito.')
+
+        # Si el pedido no tiene más items, eliminar el pedido también
+        if not pedido.pedido_item.exists():
+            pedido.delete()
+            messages.success(request, 'El artículo ha sido eliminado y el pedido estaba vacío, por lo que se eliminó el pedido.')
+        else:
+            messages.success(request, f'El artículo {item_carrito.item.nombre} ha sido eliminado del carrito.')
+
         return redirect('ver-carro')
-    
+
 class ActualizarCantidadView(View):
     def post(self, request, item_id):
         item_carrito = get_object_or_404(PedidoItem, id=item_id)
@@ -123,7 +140,7 @@ class PagarPedidoView(View):
         cliente = self.get_or_create_cliente(self.request)
         pedido = get_object_or_404(Pedido, cliente=cliente, completado=False)
         pedido.completado = True
-        pedido.estado = 'preparacion'
+        pedido.estado = 'confirmado'
         pedido.save()
         messages.success(request, 'Pedido confirmado, guardado en el historial.')
         # Redirige a la página de confirmación del pedido
