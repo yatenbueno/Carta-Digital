@@ -52,8 +52,8 @@ class Cliente(models.Model):
 class Pedido(models.Model):
     Estados = [
          # ('valor_interno', 'Etiqueta visible')
-        ('confirmado', 'confirmado'),
         ('pendiente', 'pendiente de confirmacion'),
+        ('confirmado', 'confirmado'),
         ('preparacion', 'En preparación'),
         ('listo_para_entregar', 'Listo para entregar'),
         ('entregado', 'entregado'),

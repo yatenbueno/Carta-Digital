@@ -1,5 +1,3 @@
-from cgitb import html
-from re import template
 from django.views.generic.base import TemplateView
 from carta.models import Item
 

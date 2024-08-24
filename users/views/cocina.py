@@ -13,5 +13,5 @@ class CocinaView(TemplateView):
         clientes_con_pedidos_pendientes = Cliente.objects.filter(
             pedido__estado__in=['confirmado', 'preparacion', 'listo_para_entregar']
         ).distinct()
-        context['clientes_con_pedidos_pendientes'] = clientes_con_pedidos_pendientes
+        context['clientes_con_pedidos_pendientes'] = clientes_con_pedidos_pendientes #diccionario context[clave] = valor
         return context

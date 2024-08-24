@@ -5,16 +5,11 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
 
 
-class PedidosPendientesView(LoginRequiredMixin, TemplateView):
+class PedidosPendientes(LoginRequiredMixin, TemplateView):
     template_name = 'pedidos_pendientes.html'
     login_url = '/users/login/'  # URL de tu página de inicio de sesión
     redirect_field_name = 'next'
 
-    def dispatch(self, request, *args, **kwargs):
-        if not request.user.is_authenticated:
-            messages.warning(request, 'Por favor, inicie sesión para ver los pedidos pendientes.')
-            return redirect(self.login_url + '?next=' + request.path)
-        return super().dispatch(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

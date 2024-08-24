@@ -1,8 +1,4 @@
-from cgitb import html
-from re import template
-from django.template import ContextPopException
 from django.views.generic.base import TemplateView
-from django.http import HttpResponse
 from carta.models import Item
 
 class BodegaView(TemplateView):

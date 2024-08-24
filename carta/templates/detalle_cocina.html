@@ -59,7 +59,11 @@
                 <!-- Formulario para cambiar el estado del pedido -->
                 <form method="post" class="mt-4">
                     {% csrf_token %}
-                    {{ form.as_p }}
+                    {% if form %}
+                        {{ form.as_p }}
+                    {% else %}
+                        <p>No hay opciones de estado disponibles para cambiar.</p>
+                    {% endif %}
                     <button type="submit" class="btn btn-primary">Actualizar Estado</button>
                 </form>
             </div>

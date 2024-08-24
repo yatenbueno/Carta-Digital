@@ -154,7 +154,7 @@ class CambiarEstadoPedidoView(LoginRequiredMixin, UpdateView):
     model = Pedido
     fields = ['estado']
     template_name = 'cambiar_estado_pedido.html'
-    login_url = '/users/login/'  # URL de tu página de inicio de sesión
+    login_url = '/users/login/'
 
     def get_object(self, queryset=None):
         obj = get_object_or_404(Pedido, id=self.kwargs['pedido_id'])
@@ -163,9 +163,21 @@ class CambiarEstadoPedidoView(LoginRequiredMixin, UpdateView):
             return redirect(self.login_url)
         return obj
 
+    def get_form(self, form_class=None):
+        form = super().get_form(form_class)
+        estado_actual = self.get_object().estado
+        opciones_validas = self.get_object().ESTADOS_TRANSICIONES.get(estado_actual, [])
+        form.fields['estado'].choices = [(estado, estado.replace('_', ' ').capitalize()) for estado in opciones_validas]
+        return form
+
     def form_valid(self, form):
+        nuevo_estado = form.cleaned_data['estado']
+        estado_actual = self.get_object().estado
+        if nuevo_estado not in self.get_object().ESTADOS_TRANSICIONES.get(estado_actual, []):
+            messages.error(self.request, 'Cambio de estado no permitido.')
+            return redirect(self.get_success_url())
         messages.success(self.request, 'Estado del pedido actualizado exitosamente.')
         return super().form_valid(form)
 
     def get_success_url(self):
-        return reverse('lista-pedidos')    
+        return reverse('lista-pedidos')
