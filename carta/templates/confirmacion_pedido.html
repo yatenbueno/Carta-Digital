@@ -1,57 +1,86 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="container mt-4">
-    <h3 class="text-center bg-green mb-4">Pedido Exitoso</h3>
+<div class="container mt-5">
 
-    <div class="card mb-4">
-        <div class="card-body">
-            <h4 class="card-title mb-3">Detalles del Pedido</h4>
-            <p><strong> Número de Pedido:</strong> {{ pedido.id }}</p>
-            <p><strong>Nombre del Cliente:</strong> {{ pedido.cliente.user.get_full_name }}</p>
-            <p><strong>Fecha del Pedido:</strong> {{ pedido.fecha|date:"d/m/Y H:i" }}</p>
-            <p><strong>Total:</strong> ${{ total_pedido }}</p>
-            <p><strong>Estado del Pedido:</strong> 
-                <span class="badge 
-                        {% if pedido.estado == 'confirmado' %}bg-warning
-                        {% elif pedido.estado == 'finalizado' %}bg-warning
-                        {% elif pedido.estado == 'listo_para_entregar' %}bg-success
-                        {% elif pedido.estado == 'cancelado' %}bg-danger
-                        {% elif pedido.estado == 'entregado' %}bg-info
-                        {% else %}bg-dark
-                        {% endif %}  
-                ">
-                    {{ pedido.get_estado_display }}
-                </span>
-            </p>
+    <div class="text-center mb-4">
+        <h3 class="display-5">Pedido Exitoso</h3>
+        <p class="lead text-muted">Tu pedido ha sido recibido y está en proceso.</p>
+        <div class="alert alert-success d-inline-block">
+            <strong>¡Gracias por tu compra!</strong>
         </div>
     </div>
 
-    <div class="card mb-4">
+    <!-- Detalles del Pedido -->
+    <div class="card shadow-lg mb-4 border-light">
         <div class="card-body">
-            <h5 class="card-title mb-3">Items del Pedido</h5>
-            <ul class="list-group">
-                {% for item in items_pedido %}
-                <li class="list-group-item d-flex justify-content-between align-items-center">
-                    <div>
-                        <strong>{{ item.item.nombre }}</strong> (x{{ item.cantidad_seleccionada }})
-                    </div>
-                    <span class="badge bg-primary rounded-pill">${{ item.subtotal }}</span>
-                </li>
-                {% endfor %}
-            </ul>
+            <h4 class="card-title mb-3 text-primary">Detalles del Pedido</h4>
+            <dl class="row">
+                <dt class="col-sm-4">Número de Pedido:</dt>
+                <dd class="col-sm-8">{{ pedido.id }}</dd>
+                <dt class="col-sm-4">Nombre del Cliente:</dt>
+                <dd class="col-sm-8">{{ pedido.cliente.user.get_full_name }}</dd>
+                <dt class="col-sm-4">Fecha del Pedido:</dt>
+                <dd class="col-sm-8">{{ pedido.fecha|date:"d/m/Y H:i" }}</dd>
+                <dt class="col-sm-4">Total:</dt>
+                <dd class="col-sm-8"><strong>${{ total_pedido }}</strong></dd>
+                <dt class="col-sm-4">Estado del Pedido:</dt>
+                <dd class="col-sm-8">
+                    <span class="badge
+                            {% if pedido.estado == 'confirmado' %}bg-warning text-dark
+                            {% elif pedido.estado == 'finalizado' %}bg-success text-white
+                            {% elif pedido.estado == 'listo_para_entregar' %}bg-success text-white
+                            {% elif pedido.estado == 'cancelado' %}bg-danger text-white
+                            {% elif pedido.estado == 'entregado' %}bg-info text-white
+                            {% else %}bg-dark text-white
+                            {% endif %}
+                    ">
+                        {{ pedido.get_estado_display }}
+                    </span>
+                </dd>
+            </dl>
         </div>
     </div>
 
-    <div class="card mb-4">
+    <!-- Items del Pedido -->
+    <div class="card shadow-lg mb-4 border-light">
         <div class="card-body">
-            <h5 class="card-title">Anotaciones del Cliente</h5>
-            <p>{{ pedido.anotacion_cliente|default:"No hay anotaciones" }}</p>
+            <h5 class="card-title mb-3 text-secondary">Items del Pedido</h5>
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Nombre del Producto</th>
+                            <th>Cantidad</th>
+                            <th>Subtotal</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in items_pedido %}
+                        <tr>
+                            <td>{{ item.item.nombre }}</td>
+                            <td>x{{ item.cantidad_seleccionada }}</td>
+                            <td>${{ item.subtotal }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 
+    <!-- Anotaciones del Cliente -->
+    <div class="card shadow-lg mb-4 border-light">
+        <div class="card-body">
+            <h5 class="card-title text-secondary">Anotaciones del Cliente</h5>
+            <p class="text-muted">{{ pedido.anotacion_cliente|default:"No hay anotaciones" }}</p>
+        </div>
+    </div>
+
+    <!-- Botón de Volver al Inicio -->
     <div class="text-end mt-4">
-        <a href="{% url 'index' %}" class="btn btn-secondary">Volver al Inicio</a>
+        <a href="{% url 'index' %}" class="btn btn-primary btn-lg">Volver al Inicio</a>
     </div>
+
 </div>
 {% endblock %}

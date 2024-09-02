@@ -1,13 +1,13 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="container mt-4">
+<div class="container mt-5">
 
     {% if items_carrito %}
-    <h3 class="mb-4">Tu pedido está casi listo</h3>
+    <h3 class="mb-4 text-success">Tu pedido está casi listo</h3>
     <div class="table-responsive">
-        <table class="table table-bordered">
-            <thead>
+        <table class="table table-hover table-bordered">
+            <thead class="table-dark">
                 <tr>
                     <th>Foto</th>
                     <th>Nombre</th>
@@ -20,23 +20,25 @@
             <tbody>
                 {% for item in items_carrito %}
                 <tr>
-                    <td style="width: 8%;"><img class="img-fluid" src="{{ item.item.foto.url }}" alt="Foto"/></td>
+                    <td class="text-center">
+                        <img class="img-fluid rounded" src="{{ item.item.foto.url }}" alt="Foto" style="max-height: 100px; object-fit: cover;">
+                    </td>
                     <td>{{ item.item.nombre }}</td>
                     <td>${{ item.item.precio }}</td>
-                    <td style="width: 16%;">
+                    <td>
                         <form method="post" action="{% url 'actualizar_cantidad' item.id %}">
                             {% csrf_token %}
                             <div class="input-group">
                                 <input type="number" name="cantidad" value="{{ item.cantidad_seleccionada }}" min="1" max="{{ item.item.cantidad_stock }}" class="form-control">
-                                <button type="submit" class="btn btn-primary ms-2">Actualizar</button>
+                                <button type="submit" class="btn btn-outline-primary ms-2">Actualizar</button>
                             </div>
                         </form>
                     </td>
                     <td>${{ item.subtotal }}</td>
-                    <td>
+                    <td class="text-center">
                         <form method="post" action="{% url 'eliminar_del_pedido' item.id %}">
                             {% csrf_token %}
-                            <button type="submit" class="btn btn-danger">Eliminar</button>
+                            <button type="submit" class="btn btn-outline-danger">Eliminar</button>
                         </form>
                     </td>
                 </tr>
@@ -54,18 +56,18 @@
                     <label for="anotacion" class="form-label">Anotaciones para la cocina:</label>
                     <textarea name="anotacion" id="anotacion" rows="3" class="form-control">{{ carrito.anotacion_cliente }}</textarea>
                 </div>
-                <button type="submit" class="btn btn-primary">Guardar Anotaciones</button>
+                <button type="submit" class="btn btn-success w-100">Guardar Anotaciones</button>
             </form>
         </div>
         <div class="col-md-6 text-end">
-            <div class="total-carrito">
-                <p class="fw-bold">Total: ${{ total_carrito }}</p>
+            <div class="total-carrito bg-light p-3 rounded">
+                <p class="fw-bold text-success">Total: ${{ total_carrito }}</p>
+                <form method="post" action="{% url 'pagar-pedido' %}">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-primary w-100">Confirmá tu pedido</button>
+                </form>
+                <a href="{% url 'index' %}" class="btn btn-secondary mt-2 d-block w-100">Seguir Comprando</a>
             </div>
-            <form method="post" action="{% url 'pagar-pedido' %}">
-                {% csrf_token %}
-                <button type="submit" class="btn btn-primary">Confirmá tu pedido</button>
-            </form>
-            <a href="{% url 'index' %}" class="btn btn-secondary mt-2 d-block">Seguir Comprando</a>
         </div>
     </div>
 
@@ -78,7 +80,7 @@
 {% if messages %}
 <div class="container mt-4">
     <div class="alert alert-info">
-        <ul class="list-unstyled">
+        <ul class="list-unstyled mb-0">
             {% for message in messages %}
             <li>{{ message }}</li>
             {% endfor %}
