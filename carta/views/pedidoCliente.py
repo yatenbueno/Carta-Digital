@@ -11,6 +11,7 @@ class PedidoDelCliente(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         cliente = self.get_object()
+        
         context['pedidos'] = Pedido.objects.filter(cliente=cliente).exclude(estado = 'terminado')
         return context
 

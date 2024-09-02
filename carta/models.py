@@ -50,24 +50,25 @@ class Cliente(models.Model):
 
 
 class Pedido(models.Model):
-    Estados = [
+    ESTADOS_CHOICES = [
          # ('valor_interno', 'Etiqueta visible')
-        ('pendiente', 'pendiente de confirmacion'),
+        
         ('confirmado', 'confirmado'),
-        ('preparacion', 'En preparación'),
+        ('en_preparacion', 'En preparación'),
         ('listo_para_entregar', 'Listo para entregar'),
         ('entregado', 'entregado'),
         ('finalizado', 'Finalizado'),
         ('cancelado', 'Cancelado'),
         
     ]
+    
     anotacion_cliente = models.TextField(blank= True, null= True)
     items = models.ManyToManyField(Item, blank=True, related_name="items", through='PedidoItem')
     monto_total = models.FloatField(null=False, default=0, verbose_name="Monto total")
     fecha = models.DateTimeField(null=True, auto_now_add=True)  # Definido con auto_now_add para establecer la fecha automáticamente al crear un pedido
     cliente = models.ForeignKey(Cliente, null=True, on_delete=models.CASCADE)
     completado= models.BooleanField(default=False, null=True)
-    estado= models.CharField(max_length=25, choices= Estados, default= 'confirmado', verbose_name="Estado del Pedido")
+    estado= models.CharField(max_length=25, choices= ESTADOS_CHOICES, default= 'confirmado')
 
     def calcular_monto(self):
         monto_total = 0
@@ -79,7 +80,7 @@ class Pedido(models.Model):
         
    
     def get_estado_display(self):
-        return dict(self.Estados).get(self.estado, 'Desconocido')
+        return dict(self.ESTADOS_CHOICES).get(self.estado, 'Desconocido')
 
     def __str__(self):
         return f'Pedido {self.id} - {self.get_estado_display()}'

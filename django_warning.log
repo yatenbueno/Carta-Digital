@@ -1,0 +1,148 @@
+Not Found: /favicon.ico
+"GET /favicon.ico HTTP/1.1" 404 4856
+Not Found: /favicon.ico
+"GET /favicon.ico HTTP/1.1" 404 4856
+Not Found: /favicon.ico
+"GET /favicon.ico HTTP/1.1" 404 4856
+Not Found: /favicon.ico
+"GET /favicon.ico HTTP/1.1" 404 4856
+Not Found: /favicon.ico
+"GET /favicon.ico HTTP/1.1" 404 4856
+Not Found: /favicon.ico
+Not Found: /favicon.ico
+"GET /favicon.ico HTTP/1.1" 404 4856
+Not Found: /favicon.ico
+"GET /favicon.ico HTTP/1.1" 404 4856
+Internal Server Error: /historial_pedidos/
+Traceback (most recent call last):
+  File "/home/cristian/.local/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/cristian/.local/lib/python3.10/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/cristian/.local/lib/python3.10/site-packages/django/contrib/auth/decorators.py", line 23, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/home/cristian/Documentos/Laboratorio de Programacion/Carta-Digital/carta/views/historial.py", line 7, in historial_pedidos
+    cliente = request.user.cliente
+  File "/home/cristian/.local/lib/python3.10/site-packages/django/utils/functional.py", line 259, in inner
+    return func(self._wrapped, *args)
+  File "/home/cristian/.local/lib/python3.10/site-packages/django/db/models/fields/related_descriptors.py", line 461, in __get__
+    raise self.RelatedObjectDoesNotExist(
+django.contrib.auth.models.User.cliente.RelatedObjectDoesNotExist: User has no cliente.
+"GET /historial_pedidos/ HTTP/1.1" 500 78770
+Not Found: /favicon.ico
+"GET /favicon.ico HTTP/1.1" 404 4856
+Internal Server Error: /historial_pedidos/
+Traceback (most recent call last):
+  File "/home/cristian/.local/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/cristian/.local/lib/python3.10/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/cristian/.local/lib/python3.10/site-packages/django/contrib/auth/decorators.py", line 23, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/home/cristian/Documentos/Laboratorio de Programacion/Carta-Digital/carta/views/historial.py", line 7, in historial_pedidos
+    cliente = request.user.cliente
+  File "/home/cristian/.local/lib/python3.10/site-packages/django/utils/functional.py", line 259, in inner
+    return func(self._wrapped, *args)
+  File "/home/cristian/.local/lib/python3.10/site-packages/django/db/models/fields/related_descriptors.py", line 461, in __get__
+    raise self.RelatedObjectDoesNotExist(
+django.contrib.auth.models.User.cliente.RelatedObjectDoesNotExist: User has no cliente.
+"GET /historial_pedidos/ HTTP/1.1" 500 78770
+Not Found: /favicon.ico
+"GET /favicon.ico HTTP/1.1" 404 4856
+Not Found: /favicon.ico
+"GET /favicon.ico HTTP/1.1" 404 4856
+Not Found: /favicon.ico
+"GET /favicon.ico HTTP/1.1" 404 4856
+Not Found: /favicon.ico
+"GET /favicon.ico HTTP/1.1" 404 4856
+Not Found: /favicon.ico
+Not Found: /favicon.ico
+"GET /favicon.ico HTTP/1.1" 404 4856
+Internal Server Error: /historial_pedidos/
+Traceback (most recent call last):
+  File "/home/cristian/.local/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/cristian/.local/lib/python3.10/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/cristian/.local/lib/python3.10/site-packages/django/contrib/auth/decorators.py", line 23, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/home/cristian/Documentos/Laboratorio de Programacion/Carta-Digital/carta/views/historial.py", line 7, in historial_pedidos
+    cliente = request.user.cliente
+  File "/home/cristian/.local/lib/python3.10/site-packages/django/utils/functional.py", line 259, in inner
+    return func(self._wrapped, *args)
+  File "/home/cristian/.local/lib/python3.10/site-packages/django/db/models/fields/related_descriptors.py", line 461, in __get__
+    raise self.RelatedObjectDoesNotExist(
+django.contrib.auth.models.User.cliente.RelatedObjectDoesNotExist: User has no cliente.
+"GET /historial_pedidos/ HTTP/1.1" 500 78528
+Internal Server Error: /carro/
+Traceback (most recent call last):
+  File "/home/cristian/.local/lib/python3.10/site-packages/django/db/models/query.py", line 657, in get_or_create
+    return self.get(**kwargs), False
+  File "/home/cristian/.local/lib/python3.10/site-packages/django/db/models/query.py", line 496, in get
+    raise self.model.DoesNotExist(
+carta.models.Cliente.DoesNotExist: Cliente matching query does not exist.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/cristian/.local/lib/python3.10/site-packages/django/db/backends/utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+  File "/home/cristian/.local/lib/python3.10/site-packages/django/db/backends/sqlite3/base.py", line 477, in execute
+    return Database.Cursor.execute(self, query, params)
+sqlite3.IntegrityError: NOT NULL constraint failed: carta_cliente.fecha_nacimiento
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/cristian/.local/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/cristian/.local/lib/python3.10/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/cristian/.local/lib/python3.10/site-packages/django/views/generic/base.py", line 84, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/cristian/Documentos/Laboratorio de Programacion/Carta-Digital/carta/views/carro.py", line 71, in dispatch
+    return super().dispatch(request, *args, **kwargs)
+  File "/home/cristian/.local/lib/python3.10/site-packages/django/views/generic/base.py", line 119, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/home/cristian/.local/lib/python3.10/site-packages/django/views/generic/base.py", line 185, in get
+    context = self.get_context_data(**kwargs)
+  File "/home/cristian/Documentos/Laboratorio de Programacion/Carta-Digital/carta/views/carro.py", line 88, in get_context_data
+    cliente = self.get_or_create_cliente(self.request)
+  File "/home/cristian/Documentos/Laboratorio de Programacion/Carta-Digital/carta/views/carro.py", line 104, in get_or_create_cliente
+    cliente, _ = Cliente.objects.get_or_create(user=request.user)
+  File "/home/cristian/.local/lib/python3.10/site-packages/django/db/models/manager.py", line 85, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "/home/cristian/.local/lib/python3.10/site-packages/django/db/models/query.py", line 664, in get_or_create
+    return self.create(**params), True
+  File "/home/cristian/.local/lib/python3.10/site-packages/django/db/models/query.py", line 514, in create
+    obj.save(force_insert=True, using=self.db)
+  File "/home/cristian/.local/lib/python3.10/site-packages/django/db/models/base.py", line 806, in save
+    self.save_base(
+  File "/home/cristian/.local/lib/python3.10/site-packages/django/db/models/base.py", line 857, in save_base
+    updated = self._save_table(
+  File "/home/cristian/.local/lib/python3.10/site-packages/django/db/models/base.py", line 1000, in _save_table
+    results = self._do_insert(
+  File "/home/cristian/.local/lib/python3.10/site-packages/django/db/models/base.py", line 1041, in _do_insert
+    return manager._insert(
+  File "/home/cristian/.local/lib/python3.10/site-packages/django/db/models/manager.py", line 85, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "/home/cristian/.local/lib/python3.10/site-packages/django/db/models/query.py", line 1434, in _insert
+    return query.get_compiler(using=using).execute_sql(returning_fields)
+  File "/home/cristian/.local/lib/python3.10/site-packages/django/db/models/sql/compiler.py", line 1621, in execute_sql
+    cursor.execute(sql, params)
+  File "/home/cristian/.local/lib/python3.10/site-packages/django/db/backends/utils.py", line 103, in execute
+    return super().execute(sql, params)
+  File "/home/cristian/.local/lib/python3.10/site-packages/django/db/backends/utils.py", line 67, in execute
+    return self._execute_with_wrappers(
+  File "/home/cristian/.local/lib/python3.10/site-packages/django/db/backends/utils.py", line 80, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+  File "/home/cristian/.local/lib/python3.10/site-packages/django/db/backends/utils.py", line 84, in _execute
+    with self.db.wrap_database_errors:
+  File "/home/cristian/.local/lib/python3.10/site-packages/django/db/utils.py", line 91, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "/home/cristian/.local/lib/python3.10/site-packages/django/db/backends/utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+  File "/home/cristian/.local/lib/python3.10/site-packages/django/db/backends/sqlite3/base.py", line 477, in execute
+    return Database.Cursor.execute(self, query, params)
+django.db.utils.IntegrityError: NOT NULL constraint failed: carta_cliente.fecha_nacimiento
+"GET /carro/ HTTP/1.1" 500 187995

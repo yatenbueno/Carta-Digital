@@ -12,7 +12,11 @@ def historial_pedidos(request):
 @login_required(login_url='/users/login/')
 def detalle_pedido(request, pedido_id):
     cliente = request.user.cliente
-    pedido = get_object_or_404(Pedido, id=pedido_id, cliente=cliente)
+
+    pedido = Pedido.objects.filter(id=pedido_id, cliente=cliente).first()
+    if not pedido:
+            return render(request, 'pedido_no_exiset.html', status=404)
+    
     pedido_items = pedido.pedido_item.all()
     total_pedido = pedido.calcular_monto()
     

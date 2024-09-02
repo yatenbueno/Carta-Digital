@@ -42,10 +42,17 @@ class RegistroForm(UserCreationForm):
         
         return cleaned_data  
 
+
 class CambioEstadoForm(forms.ModelForm):
+    estado = forms.ChoiceField(choices=[])
+    
     class Meta:
         model = Pedido
         fields = ['estado']
-        widgets = {
-            'estado': forms.Select(attrs={'class': 'form-control'})
-        }
+        
+
+    def __init__(self, *args, **kwargs):
+        estados_validos = kwargs.pop('estados_validos', [])
+        super().__init__(*args, **kwargs)
+        # Filtrar las opciones válidas
+        self.fields['estado'].choices = [(estado, estado.capitalize()) for estado in estados_validos]

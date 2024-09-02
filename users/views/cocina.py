@@ -1,5 +1,6 @@
 from django.views.generic import TemplateView
-from carta.models import Cliente, Pedido
+from carta.models import Cliente
+
 
 class CocinaView(TemplateView):
     template_name = 'cocina.html'

@@ -1,6 +1,6 @@
 from django.urls import reverse
 from django.contrib import messages
-from django.shortcuts import get_object_or_404, redirect
+from django.shortcuts import get_object_or_404, redirect, render
 from django.views.generic import TemplateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from carta.models import Pedido, PedidoItem
@@ -19,7 +19,12 @@ class ConfirmarPedidoView(TemplateView, LoginRequiredMixin):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         pedido_id = self.kwargs.get('pedido_id')
-        pedido = get_object_or_404(Pedido, id=pedido_id, cliente=self.request.user.cliente, completado=True)
+        
+        try:
+            pedido = Pedido.objects.get(id=pedido_id, cliente=self.request.user.cliente, completado=True)
+        except Pedido.DoesNotExist:
+            return render(self.request, 'pedido_no_existe.html')
+        
         items_pedido = PedidoItem.objects.filter(pedido=pedido)
         total_pedido = pedido.calcular_monto()
         
